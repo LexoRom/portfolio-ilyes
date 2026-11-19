@@ -2,688 +2,640 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Ilyes SANDLI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* --- SYSTÈME DE COULEURS & DESIGN --- */
-        :root {
-            --bg-main: #0a0a0c;
-            --bg-card: rgba(18, 18, 24, 0.65);
-            --bg-panel: rgba(12, 12, 16, 0.98);
-            --accent: #8a2be2; 
-            --accent-glow: rgba(138, 43, 226, 0.4);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --line-subtle: rgba(255, 255, 255, 0.05);
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ilyes Sandli – Développeur full-stack | Portfolio</title>
+    <meta name="description" content="Portfolio d'Ilyes Sandli, étudiant en BUT 3 Informatique à Amiens, à la recherche d'un stage de fin d'études (3 mois) en développement : web, Unity, bases de données.">
+    <meta name="author" content="Ilyes Sandli">
+    <meta name="theme-color" content="#050507">
+    <link rel="canonical" href="https://lexorom.github.io/portfolio-ilyes/">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="Ilyes Sandli – Développeur full-stack">
+    <meta property="og:description" content="Étudiant en BUT 3 Informatique à Amiens, à la recherche d'un stage de fin d'études (3 mois).">
+    <meta property="og:url" content="https://lexorom.github.io/portfolio-ilyes/">
+    <meta property="og:image" content="https://lexorom.github.io/portfolio-ilyes/images/photo.jpg">
+    <meta name="twitter:card" content="summary">
 
-        body {
-            background-color: var(--bg-main); color: var(--text-primary);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden; scroll-behavior: smooth;
-        }
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;display=swap">
+    <link rel="stylesheet" href="css/style.css">
 
-        h1, h2, h3, .section-number { font-family: 'Space Grotesk', sans-serif; }
-
-        /* ================= EFFET TOUCHES DE PIANO ================= */
-        .piano-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 0; display: flex;
-        }
-        .piano-key { flex: 1; height: 100%; border-right: 1px solid var(--line-subtle); transition: background-color 0.3s ease; }
-        .piano-key:last-child { border-right: none; }
-        
-        .piano-key:nth-child(1) { --hover-color: rgba(255, 70, 85, 0.04); --flash-color: rgba(255, 70, 85, 0.25); }
-        .piano-key:nth-child(2) { --hover-color: rgba(255, 215, 0, 0.04); --flash-color: rgba(255, 215, 0, 0.25); }
-        .piano-key:nth-child(3) { --hover-color: rgba(0, 250, 154, 0.04); --flash-color: rgba(0, 250, 154, 0.25); }
-        .piano-key:nth-child(4) { --hover-color: rgba(30, 144, 255, 0.04); --flash-color: rgba(30, 144, 255, 0.25); }
-        .piano-key:nth-child(5) { --hover-color: rgba(138, 43, 226, 0.05); --flash-color: rgba(138, 43, 226, 0.3); }
-
-        .piano-key.active-hover { background-color: var(--hover-color); }
-
-        .piano-key.flash { animation: keyFlash 0.4s ease-out; }
-        @keyframes keyFlash {
-            0% { background-color: var(--flash-color); }
-            100% { background-color: var(--hover-color); }
-        }
-
-        #particle-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
-        .piano-particle {
-            position: absolute; border-radius: 50%; pointer-events: none; box-shadow: 0 0 12px currentColor;
-            animation: particleFade var(--anim-duration, 0.8s) cubic-bezier(0.15, 1, 0.3, 1) forwards;
-        }
-        @keyframes particleFade {
-            0% { transform: translate(-50%, -50%) scale(0.2) rotate(0deg); opacity: 1; filter: brightness(1.5); }
-            100% { transform: translate(var(--mx), var(--my)) scale(1.5) rotate(var(--rot)); opacity: 0; }
-        }
-
-        /* --- ORBES LUMINEUX AMBIANTS --- */
-        .ambient-lights { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
-        .light-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4; animation: floatOrb 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }
-        .orb-1 { width: 500px; height: 500px; background: var(--accent-glow); top: -10%; left: -10%; }
-        .orb-2 { width: 400px; height: 400px; background: rgba(65, 105, 225, 0.25); bottom: -5%; right: 10%; animation-delay: -5s; }
-        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(50px, 80px) scale(1.1); } 100% { transform: translate(-80px, 40px) scale(0.95); } }
-
-        /* --- PANNEAUX ET BLOCS DE TEXTE --- */
-        .glass-panel {
-            background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--line-subtle);
-            padding: 3.5rem; width: 100%; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        .glass-panel::before, .image-container::before, .image-placeholder::before {
-            content: ''; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent 45%, rgba(138, 43, 226, 0.04) 50%, transparent 55%);
-            animation: shine 8s linear infinite; pointer-events: none; z-index: 1; transform-origin: center;
-        }
-        .image-container::before { animation-duration: 4s; background: linear-gradient(45deg, transparent 45%, rgba(138, 43, 226, 0.08) 50%, transparent 55%); }
-        .glass-panel > * { position: relative; z-index: 2; }
-        @keyframes shine { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        /* --- CONFIGURATION DES SECTIONS ET TRANSITIONS --- */
-        .scroll-wrapper { position: relative; z-index: 10; }
-        section {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            padding: 6% 10%; position: relative; opacity: 0; visibility: hidden; pointer-events: none;
-            transition: opacity 0.8s ease, visibility 0.8s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        section.is-visible { opacity: 1; visibility: visible; pointer-events: all; }
-
-        #accueil { transform: scale(0.96); } #accueil.is-visible { transform: scale(1); }
-        #apropos { transform: translateX(-60px); } #apropos.is-visible { transform: translateX(0); }
-        #synthese { transform: translateY(60px); } #synthese.is-visible { transform: translateY(0); }
-        #experience { transform: translateY(80px); } #experience.is-visible { transform: translateY(0); }
-        #cv-section { transform: scale(1.02); } #cv-section.is-visible { transform: scale(1); }
-        #acquis { transform: translateX(60px); } #acquis.is-visible { transform: translateX(0); }
-        #personnage { transform: scale(0.98); } #personnage.is-visible { transform: scale(1); }
-        #references { transform: scale(1.04); } #references.is-visible { transform: scale(1); }
-        #contact { transform: translateY(-40px); } #contact.is-visible { transform: translateY(0); }
-
-        /* --- TYPOGRAPHIE STANDARD --- */
-        .section-number { font-size: 1.2rem; color: var(--accent); font-weight: 700; margin-bottom: 1rem; display: inline-block; letter-spacing: 2px; }
-        h2 { font-size: 3rem; font-weight: 700; margin-bottom: 2rem; letter-spacing: -1px; text-transform: uppercase;}
-        p, li { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; }
-        .meta-date { font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; color: var(--accent); margin-bottom: 0.5rem; display: block; }
-
-        /* --- SYSTEME D'ONGLETS POUR A PROPOS --- */
-        .about-tabs-container { display: grid; grid-template-columns: 280px 1fr; gap: 3rem; margin-top: 1rem; align-items: start; }
-        .tabs-sidebar { display: flex; flex-direction: column; gap: 0.75rem; }
-        .tab-btn { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--line-subtle); color: var(--text-secondary); padding: 1.2rem 1.5rem; text-align: left; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; }
-        .tab-btn:hover { background: rgba(138, 43, 226, 0.08); color: #fff; border-color: var(--accent); }
-        .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 0 15px rgba(138, 43, 226, 0.3); }
-        .tabs-body { background: rgba(0, 0, 0, 0.2); border: 1px solid var(--line-subtle); padding: 2.5rem; min-height: 300px; border-radius: 4px; }
-        .tab-content { display: none; animation: tabFadeIn 0.5s ease forwards; }
-        .tab-content.active { display: block; }
-        @keyframes tabFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- TIMELINE SYNTHESE --- */
-        .timeline { position: relative; padding-left: 2.5rem; border-left: 2px solid rgba(138, 43, 226, 0.3); margin-top: 2rem; }
-        .timeline-item { position: relative; margin-bottom: 3rem; }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-item::before {
-            content: ''; position: absolute; left: -2.95rem; top: 0.2rem; width: 15px; height: 15px;
-            background: var(--bg-main); border: 2px solid var(--accent); border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-        .timeline-item.active::before { background: var(--accent); box-shadow: 0 0 15px var(--accent); }
-        .timeline-item h3 { color: #fff; font-size: 1.4rem; margin-bottom: 0.5rem; }
-        .timeline-item .dropped { color: #ff4655; font-size: 0.9rem; text-decoration: line-through; margin-top: 0.5rem; display: inline-block; }
-        .timeline-item .kept { color: #00fa9a; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block; margin-right: 10px; }
-
-        /* --- GRILLE EXPERIENCES --- */
-        .experience-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; width: 100%; }
-        .exp-card { display: flex; flex-direction: column; cursor: pointer; transition: all 0.3s ease; padding: 1rem; border-radius: 8px; z-index: 2; position: relative;}
-        .exp-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.03); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .exp-img { height: 220px; margin-bottom: 1.5rem; position: relative; overflow: hidden; border-radius: 4px; border: 1px solid rgba(138, 43, 226, 0.3); background: rgba(255, 255, 255, 0.01); display: flex; align-items: center; justify-content: center;}
-        .exp-img img { width: 100%; height: 100%; opacity: 0.9; transition: opacity 0.4s ease, transform 0.4s ease; }
-        .exp-card:hover .exp-img img { opacity: 1; transform: scale(1.02); }
-        .exp-card h3 { margin-bottom: 0.5rem; font-size: 1.4rem; color: #fff; }
-
-        /* --- CV GRID & PREVIEW --- */
-        .cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
-        
-        .cv-preview-container {
-            width: 100%; max-width: 420px; height: auto; aspect-ratio: 1 / 1.414; margin: 0 auto;
-            border: 1px solid rgba(138, 43, 226, 0.3); border-radius: 6px; overflow: hidden;
-            background: rgba(255, 255, 255, 0.01); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: zoom-in;
-        }
-        .cv-preview-container:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(138, 43, 226, 0.15); border-color: var(--accent); }
-        .cv-preview-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        /* --- LIGHTBOX GÉNÉRIQUE (POUR CV ET GALERIE) --- */
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(10, 10, 12, 0.95); backdrop-filter: blur(10px);
-            z-index: 10000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; cursor: zoom-out;
-        }
-        .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img {
-            max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 4px;
-            border: 1px solid var(--accent); box-shadow: 0 0 50px rgba(138, 43, 226, 0.3);
-            transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .lightbox.active img { transform: scale(1); }
-
-        /* --- COMPRENDRE MON PERSONNAGE --- */
-        .character-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2rem; }
-        .stat-group { margin-bottom: 1.5rem; }
-        .stat-label { display: flex; justify-content: space-between; color: #fff; font-family: 'Space Grotesk'; font-size: 0.95rem; margin-bottom: 0.5rem; text-transform: uppercase;}
-        .stat-bar { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; position: relative;}
-        .stat-fill { height: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); position: relative; }
-        .trait-box { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--line-subtle); padding: 1.5rem; border-radius: 4px; margin-bottom: 1rem;}
-        .trait-box h4 { color: var(--accent); font-family: 'Space Grotesk'; font-size: 1.1rem; margin-bottom: 0.5rem; text-transform: uppercase;}
-
-        /* --- PANNEAUX SIDEBAR ET BOUTONS --- */
-        .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 90; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
-        .overlay.active { opacity: 1; visibility: visible; }
-        .side-panel { position: fixed; top: 0; right: 0; width: 500px; max-width: 100vw; height: 100vh; background: var(--bg-panel); border-left: 1px solid var(--accent); z-index: 100; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); padding: 4rem 3rem; overflow-y: auto; }
-        .side-panel.active { transform: translateX(0); }
-        .close-btn { position: absolute; top: 2rem; right: 2rem; background: none; border: none; color: var(--text-primary); font-size: 2rem; cursor: pointer; }
-        .side-panel-img { width: 100%; height: 220px; margin-bottom: 2rem; border-radius: 4px; border: 1px solid rgba(138,43,226,0.3); display: flex; align-items: center; justify-content: center; overflow: hidden; background: rgba(255,255,255,0.05);}
-        .side-panel-img img { width: 100%; height: 100%; }
-        .side-panel h3 { font-size: 2.2rem; color: #fff; margin-bottom: 0.5rem; }
-        .side-panel .panel-meta { color: var(--accent); font-family: 'Space Grotesk'; margin-bottom: 2rem; display: block; border-bottom: 1px solid var(--line-subtle); padding-bottom: 1rem; }
-        .tech-stack { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; margin-bottom: 1rem;}
-        .tech-tag { background: rgba(138, 43, 226, 0.15); border: 1px solid var(--accent); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; color: #fff; }
-
-        .action-btn { display: inline-block; padding: 1rem 2.5rem; border: 1px solid var(--accent); background: rgba(138, 43, 226, 0.1); color: var(--text-primary); text-decoration: none; font-weight: 600; letter-spacing: 1px; transition: all 0.3s ease; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; cursor: pointer; }
-        .action-btn:hover { background: var(--accent); box-shadow: 0 0 25px rgba(138, 43, 226, 0.6); transform: translateY(-2px); }
-        .contact-centered { text-align: center; max-width: 700px; margin: 0 auto; }
-
-        @media (max-width: 1024px) {
-            .about-tabs-container, .cv-grid, .experience-grid, .character-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .side-panel { width: 100%; }
-        }
-    </style>
+    <script>document.documentElement.classList.add("js");</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ilyes Sandli",
+        "jobTitle": "Étudiant en BUT Informatique – développeur",
+        "url": "https://lexorom.github.io/portfolio-ilyes/",
+        "image": "https://lexorom.github.io/portfolio-ilyes/images/photo.jpg",
+        "address": { "@type": "PostalAddress", "addressLocality": "Amiens", "addressCountry": "FR" },
+        "alumniOf": "Institut universitaire de technologie UPJV – Amiens",
+        "knowsLanguage": ["fr", "en"],
+        "sameAs": [
+            "https://www.linkedin.com/in/ilyes-sandli-b37514383/",
+            "https://github.com/lexorom"
+        ]
+    }
+    </script>
 </head>
 <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
 
-    <div class="piano-container">
-        <div class="piano-key"></div><div class="piano-key"></div><div class="piano-key"></div><div class="piano-key"></div><div class="piano-key"></div>
-    </div>
-    <div id="particle-layer"></div>
-    <div class="ambient-lights">
-        <div class="light-orb orb-1"></div><div class="light-orb orb-2"></div>
-    </div>
-
-    <div class="overlay" id="panel-overlay"></div>
-    <aside class="side-panel" id="project-panel">
-        <button class="close-btn" id="close-panel">×</button>
-        <div id="panel-content"></div>
-    </aside>
-
-    <div class="lightbox" id="main-lightbox">
-        <img src="" alt="Aperçu plein écran" id="lightbox-img">
+    <div class="ambient" aria-hidden="true"></div>
+    <div class="piano" id="piano" aria-hidden="true">
+        <div class="piano__key"></div>
+        <div class="piano__key"></div>
+        <div class="piano__key"></div>
+        <div class="piano__key"></div>
+        <div class="piano__key"></div>
     </div>
 
-    <div class="scroll-wrapper">
-        
-        <section id="accueil">
-            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; width: 100%;">
-                <div>
-                    <span class="section-number">// 00</span>
-                    <h1 style="font-size: 4.5rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.1;">Ilyes <span style="color: var(--accent);">SANDLI</span></h1>
-                    <p style="font-size: 1.5rem; max-width: 550px; font-family: 'Space Grotesk', sans-serif;">Développeur Full-Stack</p>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a class="brand" href="#accueil">Ilyes<span>.</span>Sandli</a>
+            <nav class="nav" aria-label="Navigation principale">
+                <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-list">Menu</button>
+                <ul class="nav__list" id="nav-list">
+                    <li><a class="nav__link" href="#apropos">À propos</a></li>
+                    <li><a class="nav__link" href="#competences">Compétences</a></li>
+                    <li><a class="nav__link" href="#parcours">Parcours</a></li>
+                    <li><a class="nav__link" href="#projets">Projets</a></li>
+                    <li><a class="nav__link" href="#cv">CV</a></li>
+                    <li><a class="nav__link" href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="contenu">
+
+        <!-- ================= ACCUEIL ================= -->
+        <section class="hero" id="accueil" aria-labelledby="hero-title">
+            <div class="container hero__grid">
+                <div class="hero__text">
+                    <p class="badge">
+                        <span class="badge__dot" aria-hidden="true"></span>
+                        Recherche un stage de fin d'études · 3 mois
+                    </p>
+                    <h1 class="hero__title" id="hero-title">Ilyes <span>Sandli</span></h1>
+                    <p class="hero__role">Développeur full-stack · Étudiant en BUT 3 Informatique</p>
+                    <p class="hero__lead">
+                        Je conçois des applications web et des jeux vidéo, de l'analyse du besoin jusqu'à la mise en production.
+                        Curieux, autonome et rigoureux, je m'investis dans des projets concrets.
+                    </p>
+                    <div class="hero__actions">
+                        <a class="btn" href="#projets">Voir mes projets</a>
+                        <a class="btn btn--ghost" href="fichiers/CV_ILYES_SANDLI.pdf" download>Télécharger mon CV</a>
+                    </div>
+                    <ul class="social" aria-label="Réseaux et contact">
+                        <li><a class="social__link" href="https://github.com/lexorom" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a class="social__link" href="https://www.linkedin.com/in/ilyes-sandli-b37514383/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                        <li><a class="social__link" href="mailto:sandli.ilyes@gmail.com">Email</a></li>
+                    </ul>
                 </div>
-                <div class="image-container" style="height: 400px; border-radius: 4px; overflow: hidden; border: 1px solid rgba(138, 43, 226, 0.3);">
-                    <img src="images/photo.jpg" alt="Ilyes Sandli" style="width: 100%; height: 100%; object-fit: cover;">
+                <figure class="hero__photo">
+                    <img src="images/photo.jpg" alt="Portrait d'Ilyes Sandli" width="2248" height="2368" fetchpriority="high">
+                </figure>
+            </div>
+        </section>
+
+        <!-- ================= À PROPOS ================= -->
+        <section class="section" id="apropos" aria-labelledby="apropos-title">
+            <div class="container reveal">
+                <header class="section__header">
+                    <span class="section__eyebrow">01 · À propos</span>
+                    <h2 class="section__title" id="apropos-title">Un futur développeur en quête d'évolution</h2>
+                    <p class="section__lead">
+                        Étudiant en 3<sup>e</sup> année de BUT Informatique, je maîtrise plusieurs langages déjà utilisés pour réaliser
+                        des applications, et j'aime en découvrir de nouveaux. Ma capacité d'analyse me permet d'identifier les besoins
+                        d'un projet ainsi que les problèmes que l'on pourrait rencontrer.
+                    </p>
+                </header>
+
+                <div class="about__grid">
+                    <article class="card">
+                        <h3 class="card__title card__title--accent">Ma philosophie</h3>
+                        <p>
+                            Transparence technique, robustesse du code et modularité. Chaque brique logicielle est posée avec une
+                            intention claire. Ma devise : <strong>« Pour être performant, il faut avant tout s'amuser. »</strong>
+                        </p>
+                    </article>
+                    <article class="card">
+                        <h3 class="card__title card__title--accent">Centres d'intérêt</h3>
+                        <p>
+                            Analyse de compositions musicales, apprentissage autodidacte du game design et compétition sur
+                            Super Smash Bros. Ultimate : l'engagement et l'esprit d'équipe m'y passionnent.
+                        </p>
+                    </article>
+                    <article class="card">
+                        <h3 class="card__title card__title--accent">En un coup d'œil</h3>
+                        <dl class="facts">
+                            <div>
+                                <dt class="facts__label">Localisation</dt>
+                                <dd class="facts__value">Amiens, France</dd>
+                            </div>
+                            <div>
+                                <dt class="facts__label">Formation</dt>
+                                <dd class="facts__value">BUT Informatique, UPJV</dd>
+                            </div>
+                            <div>
+                                <dt class="facts__label">Anglais</dt>
+                                <dd class="facts__value">Niveau B2</dd>
+                            </div>
+                        </dl>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="apropos">
-            <div class="glass-panel">
-                <span class="section-number">// 01</span>
-                <h2>À Propos de moi</h2>
-                <div class="about-tabs-container">
-                    <div class="tabs-sidebar">
-                        <button class="tab-btn active" onclick="switchTab(event, 'personalite')">Ma personnalité</button>
-                        <button class="tab-btn" onclick="switchTab(event, 'valeurs')">Mes valeurs</button>
-                        <button class="tab-btn" onclick="switchTab(event, 'competences')">Mes compétences</button>
-                        <button class="tab-btn" onclick="switchTab(event, 'passions')">Mes passions</button>
-                    </div>
-                    <div class="tabs-body">
-                        <div id="personalite" class="tab-content active">
-                            <h3 style="color: #fff; margin-bottom: 1rem;">Tempérament & Profil</h3>
-                            <p>Âgé de 19 ans et toujours en quête d'excellence, j'aspire à accomplir de grandes choses avec un impact positif sur autrui. D'un naturel profondément flegmatique, je garde mon sang-froid en toute circonstance ; un atout précieux dans le monde professionnel pour mener à bien des projets.</p>
+        <!-- ================= COMPÉTENCES ================= -->
+        <section class="section" id="competences" aria-labelledby="competences-title">
+            <div class="container reveal">
+                <header class="section__header">
+                    <span class="section__eyebrow">02 · Compétences</span>
+                    <h2 class="section__title" id="competences-title">Ma boîte à outils</h2>
+                    <p class="section__lead">Des langages, des outils et des qualités humaines que j'ai éprouvés en projet.</p>
+                </header>
+
+                <div class="skills__grid">
+                    <article class="card">
+                        <h3 class="skills__group-title">Langages</h3>
+                        <ul class="tags">
+                            <li class="tag tag--accent">C++</li>
+                            <li class="tag tag--accent">C#</li>
+                            <li class="tag tag--accent">Python</li>
+                            <li class="tag tag--accent">Java</li>
+                            <li class="tag tag--accent">Node.js</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <h3 class="skills__group-title">Web</h3>
+                        <ul class="tags">
+                            <li class="tag tag--accent">HTML</li>
+                            <li class="tag tag--accent">CSS</li>
+                            <li class="tag tag--accent">JavaScript</li>
+                            <li class="tag tag--accent">PHP</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <h3 class="skills__group-title">Bases de données</h3>
+                        <ul class="tags">
+                            <li class="tag tag--accent">MySQL</li>
+                            <li class="tag tag--accent">SQL</li>
+                            <li class="tag tag--accent">PL/SQL</li>
+                            <li class="tag tag--accent">NoSQL</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <h3 class="skills__group-title">Outils &amp; méthodes</h3>
+                        <ul class="tags">
+                            <li class="tag tag--accent">Docker</li>
+                            <li class="tag tag--accent">GitHub</li>
+                            <li class="tag tag--accent">Agile / Scrum</li>
+                            <li class="tag tag--accent">Unity</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <ul class="soft-skills">
+                    <li class="card">
+                        <h3 class="card__title">Capacité d'analyse</h3>
+                        <p>Je dissèque les problèmes avant d'écrire la moindre ligne de code.</p>
+                    </li>
+                    <li class="card">
+                        <h3 class="card__title">Opiniâtreté</h3>
+                        <p>Face aux obstacles techniques, je persévère jusqu'à l'aboutissement.</p>
+                    </li>
+                    <li class="card">
+                        <h3 class="card__title">Autonomie</h3>
+                        <p>J'apprends seul en explorant la documentation et en expérimentant.</p>
+                    </li>
+                    <li class="card">
+                        <h3 class="card__title">Adaptabilité</h3>
+                        <p>Je change de langage ou d'outil selon les besoins du projet.</p>
+                    </li>
+                    <li class="card">
+                        <h3 class="card__title">Travail en équipe</h3>
+                        <p>Git, méthode Agile Scrum et communication fluide au quotidien.</p>
+                    </li>
+                    <li class="card">
+                        <h3 class="card__title">Honnêteté</h3>
+                        <p>Je dis ce qui fonctionne, ce qui bloque et ce qu'il reste à faire.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ================= PARCOURS ================= -->
+        <section class="section" id="parcours" aria-labelledby="parcours-title">
+            <div class="container reveal">
+                <header class="section__header">
+                    <span class="section__eyebrow">03 · Parcours</span>
+                    <h2 class="section__title" id="parcours-title">Synthèse de mon parcours</h2>
+                    <p class="section__lead">De la spécialité scientifique au lycée à la spécialisation en réalisation d'applications.</p>
+                </header>
+
+                <ol class="timeline">
+                    <li class="timeline__item timeline__item--current">
+                        <span class="timeline__date">2026 – en cours</span>
+                        <h3 class="timeline__title">BUT 3 Informatique – IUT UPJV, Amiens</h3>
+                        <p>
+                            Parcours « Réalisation d'applications : conception, développement, validation ».
+                            Développement d'un jeu vidéo sous Unity en équipe et recherche d'un stage de fin d'études.
+                        </p>
+                    </li>
+                    <li class="timeline__item">
+                        <span class="timeline__date">01/2026 – 03/2026</span>
+                        <h3 class="timeline__title">Stage – Maison Marmara</h3>
+                        <p>Site vitrine et menu interactif pour un restaurant, réalisés en autonomie, de l'analyse du besoin à l'intégration.</p>
+                    </li>
+                    <li class="timeline__item">
+                        <span class="timeline__date">09/2025 – 06/2026</span>
+                        <h3 class="timeline__title">BUT 2 – Réalisation d'applications</h3>
+                        <p>Architectures full-stack (PHP, JavaScript, Java), bases de données, projets StudyGo et Candy Paradise.</p>
+                    </li>
+                    <li class="timeline__item">
+                        <span class="timeline__date">09/2024 – 06/2025</span>
+                        <h3 class="timeline__title">BUT 1 – Fondamentaux de l'informatique</h3>
+                        <p>Premiers langages (HTML, CSS, SQL, C++, C#) et validation des premières compétences du référentiel.</p>
+                    </li>
+                    <li class="timeline__item">
+                        <span class="timeline__date">09/2021 – 07/2024</span>
+                        <h3 class="timeline__title">Baccalauréat général – mention Assez bien</h3>
+                        <p>Lycée Madeleine Michelis, Amiens. Spécialités Mathématiques et Numérique et sciences informatiques.</p>
+                    </li>
+                </ol>
+
+                <article class="review">
+                    <h3 class="review__title">Analyse critique de mes acquis</h3>
+                    <p>
+                        La multiplication des projets académiques et mon stage en deuxième année de BUT ont forgé mon socle de
+                        compétences en programmation. Surtout, ils m'ont confronté à la réalité du terrain et aux exigences du monde
+                        professionnel.
+                    </p>
+                    <p>
+                        J'ai pris conscience d'un enjeu majeur : <strong>l'excellence technique n'est pas une fin en soi</strong>.
+                        Une architecture perd de sa valeur si elle ne répond pas précisément aux attentes. J'accorde donc une
+                        importance capitale à l'analyse des besoins, à la communication au sein d'une équipe et à la gestion
+                        rigoureuse du cycle de vie d'un projet.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ================= PROJETS ================= -->
+        <section class="section" id="projets" aria-labelledby="projets-title">
+            <div class="container reveal">
+                <header class="section__header">
+                    <span class="section__eyebrow">04 · Projets</span>
+                    <h2 class="section__title" id="projets-title">Expériences &amp; réalisations</h2>
+                    <p class="section__lead">Projets d'équipe, projets en solo et stage en entreprise. Cliquez sur un projet pour le détail.</p>
+                </header>
+
+                <div class="projects__grid">
+
+                    <!-- Projet Unity (en cours) -->
+                    <article class="card project-card project-card--featured">
+                        <div class="project-card__media">
+                            <div class="placeholder" role="img" aria-label="Capture d'écran du jeu Unity à venir">
+                                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m21 16-5-5-9 9"/></svg>
+                                Capture d'écran à venir
+                            </div>
+                            <span class="project-card__status">En cours</span>
                         </div>
-                        <div id="valeurs" class="tab-content">
-                            <h3 style="color: #fff; margin-bottom: 1rem;">Principes directeurs</h3>
-                            <p>Transparence technique, robustesse du code et modularité. Chaque brique logicielle doit être posée avec une intention claire, en évitant le superflu pour garantir une maintenabilité optimale. Au-delà de la technique, ma principale devise reste : <br><br><strong>« Pour être performant, il faut avant tout s'amuser. »</strong></p>
-                        </div>
-                        <div id="competences" class="tab-content">
-                            <h3 style="color: #fff; margin-bottom: 1rem;">Écosystème Technique & Aptitudes</h3>
-                            <p style="margin-bottom: 1.5rem;">Développement Full-Stack et conception logicielle, structurés autour des piliers technologiques suivants :</p>
-                            <div class="tech-stack">
-                                <span class="tech-tag">C / C++ / C#</span>
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">HTML / CSS / JS</span>
-                                <span class="tech-tag">PHP</span>
-                                <span class="tech-tag">PL/SQL</span>
-                                <span class="tech-tag">Java</span>
-                                <span class="tech-tag">Méthode Agile Scrum</span>
+                        <div class="project-card__body">
+                            <span class="project-card__meta">BUT 3 · Projet d'équipe</span>
+                            <h3 class="project-card__title">Jeu vidéo de stratégie par phases</h3>
+                            <p>
+                                Jeu de stratégie développé sous Unity (C#) en équipe de cinq : trois développeurs, un réseau et un data.
+                                Je participe à la création des fonctionnalités et de l'interface utilisateur.
+                            </p>
+                            <ul class="tags" aria-label="Technologies">
+                                <li class="tag">Unity</li>
+                                <li class="tag">C#</li>
+                                <li class="tag">Interface utilisateur</li>
+                                <li class="tag">Travail en équipe</li>
+                            </ul>
+                            <div class="project-card__actions">
+                                <button class="btn btn--sm" type="button" data-dialog-open="project-unity">Voir le détail</button>
+                                <!-- TODO : ajouter l'URL du dépôt GitHub (href + retirer aria-disabled) -->
+                                <a class="btn btn--sm btn--ghost" aria-disabled="true">Code · bientôt</a>
                             </div>
                         </div>
-                        <div id="passions" class="tab-content">
-                            <h3 style="color: #fff; margin-bottom: 1rem;">Centres d'intérêt connexes</h3>
-                            <p>Le développement n'est pas ma seule passion. Grand amateur de musique, j'apprécie particulièrement analyser et décortiquer les compositions, quel que soit le genre. Le jeu vidéo occupe également une place importante, notamment au travers de la compétition sur Super Smash Bros. Ultimate. L'engagement compétitif et la dimension communautaire m'apportent une expérience unique et stimulante.</p>
+                    </article>
+
+                    <!-- Candy Paradise -->
+                    <article class="card project-card">
+                        <div class="project-card__media project-card__media--left">
+                            <img src="images/e-commerce.png" alt="Page d'accueil du site e-commerce Candy Paradise" width="1707" height="640" loading="lazy">
                         </div>
-                    </div>
+                        <div class="project-card__body">
+                            <span class="project-card__meta">BUT 2 · 03/2026 – 06/2026 · Solo</span>
+                            <h3 class="project-card__title">Candy Paradise – E-commerce</h3>
+                            <p>Boutique en ligne avec gestion des produits, paniers et commandes, paiement sécurisé et tableau de bord d'administration.</p>
+                            <ul class="tags" aria-label="Technologies">
+                                <li class="tag">PHP</li>
+                                <li class="tag">SQL</li>
+                                <li class="tag">API de paiement</li>
+                                <li class="tag">JavaScript</li>
+                            </ul>
+                            <div class="project-card__actions">
+                                <button class="btn btn--sm" type="button" data-dialog-open="project-candy">Voir le détail</button>
+                                <!-- TODO : URL GitHub / démo -->
+                                <a class="btn btn--sm btn--ghost" aria-disabled="true">Code · bientôt</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- StudyGo -->
+                    <article class="card project-card">
+                        <div class="project-card__media project-card__media--contain">
+                            <img src="images/study_go.png" alt="Logo de la plateforme de covoiturage StudyGo" width="1393" height="382" loading="lazy">
+                        </div>
+                        <div class="project-card__body">
+                            <span class="project-card__meta">BUT 2 · 09/2025 – 01/2026 · Équipe de 6</span>
+                            <h3 class="project-card__title">StudyGo – Covoiturage étudiant</h3>
+                            <p>Application web de covoiturage pour sécuriser et fluidifier les déplacements des étudiants vers les campus.</p>
+                            <ul class="tags" aria-label="Technologies">
+                                <li class="tag">PHP</li>
+                                <li class="tag">MySQL</li>
+                                <li class="tag">JavaScript</li>
+                                <li class="tag">Agile Scrum</li>
+                            </ul>
+                            <div class="project-card__actions">
+                                <button class="btn btn--sm" type="button" data-dialog-open="project-studygo">Voir le détail</button>
+                                <!-- TODO : URL GitHub / démo -->
+                                <a class="btn btn--sm btn--ghost" aria-disabled="true">Code · bientôt</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Maison Marmara -->
+                    <article class="card project-card">
+                        <div class="project-card__media">
+                            <img src="images/marmara.png" alt="Site vitrine de la Maison Marmara" width="646" height="353" loading="lazy">
+                        </div>
+                        <div class="project-card__body">
+                            <span class="project-card__meta">Stage · 01/2026 – 03/2026 · Solo</span>
+                            <h3 class="project-card__title">Maison Marmara – Site vitrine</h3>
+                            <p>Site vitrine responsive avec menu interactif pour un restaurant, du cahier des charges à la mise en ligne.</p>
+                            <ul class="tags" aria-label="Technologies">
+                                <li class="tag">HTML</li>
+                                <li class="tag">CSS</li>
+                                <li class="tag">JavaScript</li>
+                                <li class="tag">UI / UX</li>
+                            </ul>
+                            <div class="project-card__actions">
+                                <button class="btn btn--sm" type="button" data-dialog-open="project-marmara">Voir le détail</button>
+                                <!-- TODO : URL du site en ligne -->
+                                <a class="btn btn--sm btn--ghost" aria-disabled="true">Site · bientôt</a>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="synthese">
-            <div class="glass-panel">
-                <span class="section-number">// 02</span>
-                <h2>Synthèse du Parcours</h2>
-                <p style="max-width: 800px; margin-bottom: 2rem;">Traçabilité de mon évolution académique, depuis mes choix de spécialisations scientifiques jusqu'à mon intégration en filière de développement applicatif.</p>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <span class="timeline-date">Période Lycée</span>
-                        <h3>Filière Générale Scientifique</h3>
-                        <p>Acquisition des bases de la logique algorithmique et de la réflexion scientifique.</p>
-                        <div>
-                            <span class="kept">✔ Spécialité Mathématiques</span>
-                            <span class="kept">✔ Spécialité NSI (Numérique et Sciences Info)</span>
-                            <span class="dropped">✖ Abandon Physique-Chimie (Terminale)</span>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="timeline-date">Septembre 2024 - Juin 2025</span>
-                        <h3>BUT 1 : Fondamentaux de l'Informatique</h3>
-                        <p>Intégration à l'IUT d'Amiens. Assimilation des langages fondamentaux (HTML, CSS, SQL, C++, C#) et validation des premiers référentiels de compétences académiques.</p>
-                    </div>
-                    <div class="timeline-item active">
-                        <span class="timeline-date">Septembre 2025 - 2026</span>
-                        <h3>BUT 2 : Parcours Développement d'Application</h3>
-                        <p>Spécialisation dans la réalisation d'applications : conception, développement et validation. Focus sur les architectures Full-Stack (PHP, JS, Java), la sécurité des bases de données et la mise en production professionnelle (Stage et projets académiques).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="experience">
-            <div class="glass-panel" style="padding-bottom: 2rem;">
-                <span class="section-number">// 03</span>
-                <h2>Expériences & Réalisations</h2>
-                
-                <div class="experience-grid">
-                    <div class="exp-card" onclick="openPanel('twisto')">
-                        <div class="exp-img">
-                            <img src="images/twisto.png" alt="Application Twisto" style="object-fit: contain; padding: 1.5rem; background-color: rgba(255, 255, 255, 0.9);">
-                        </div>
-                        <span class="meta-date">BUT 1 • Projet de 3 mois</span>
-                        <h3>Application Réseau Twisto</h3>
-                        <p style="font-size: 0.95rem;">Modélisation et conception d'une application de gestion et d'optimisation d'itinéraires de bus inspirée des systèmes de transport urbain.</p>
-                    </div>
-
-                    <div class="exp-card" onclick="openPanel('studygo')">
-                        <div class="exp-img">
-                            <img src="images/study_go.png" alt="Study Go Covoiturage" style="object-fit: contain; padding: 1.5rem; background-color: rgba(255, 255, 255, 0.9);">
-                        </div>
-                        <span class="meta-date">BUT 2 • Projet de 3 mois</span>
-                        <h3>StudyGo - Plateforme Covoiturage</h3>
-                        <p style="font-size: 0.95rem;">Création intégrale d'une solution applicative de covoiturage pour sécuriser et fluidifier les déplacements étudiants vers les campus.</p>
-                    </div>
-
-                    <div class="exp-card" onclick="openPanel('marmara')">
-                        <div class="exp-img">
-                            <img src="images/marmara.png" alt="Maison Marmara" style="object-fit: cover; object-position: center;">
-                        </div>
-                        <span class="meta-date">BUT 2 • Janvier - Mars 2026</span>
-                        <h3>Stage : Maison Marmara</h3>
-                        <p style="font-size: 0.95rem;">Mission d'intégration responsive en entreprise. Conception visuelle et animation fluide de l'interface vitrine d'une enseigne de restauration.</p>
-                    </div>
-
-                    <div class="exp-card" onclick="openPanel('ecommerce')">
-                        <div class="exp-img">
-                            <img src="images/e-commerce.png" alt="E-Commerce API" style="object-fit: cover; object-position: left center;">
-                        </div>
-                        <span class="meta-date">BUT 2 • Printemps 2026</span>
-                        <h3>Infrastructure E-Commerce</h3>
-                        <p style="font-size: 0.95rem;">Développement complet d'une boutique avec backoffice dédié et sécurisation des flux transactionnels via l'API e-Transactions (PBX).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="cv-section">
-            <div class="glass-panel">
-                <span class="section-number">// 04</span>
-                <h2>Mon CV</h2>
-                <div class="cv-grid">
+        <!-- ================= CV ================= -->
+        <section class="section" id="cv" aria-labelledby="cv-title">
+            <div class="container reveal">
+                <div class="cv__grid">
                     <div>
-                        <p style="margin-bottom: 2rem; max-width: 450px;">Consultez mon parcours académique détaillé, ainsi que mes compétences et mes informations personnelles.</p>
-                        <a href="fichiers/CV_ILYES_SANDLI.pdf" download class="action-btn">Télécharger le document CV</a>
+                        <span class="section__eyebrow">05 · CV</span>
+                        <h2 class="section__title" id="cv-title">Mon CV</h2>
+                        <p class="section__lead">
+                            Parcours, compétences et projets en une page. Je recherche un stage de fin d'études de 3 mois
+                            en développement.
+                        </p>
+                        <div class="cv__actions">
+                            <a class="btn" href="fichiers/CV_ILYES_SANDLI.pdf" download>Télécharger le CV (PDF)</a>
+                            <a class="btn btn--ghost" href="fichiers/CV_ILYES_SANDLI.pdf" target="_blank" rel="noopener noreferrer">Ouvrir dans un onglet</a>
+                        </div>
                     </div>
-                    <div class="cv-preview-container" data-img-src="images/CV_ILYES_SANDLI.png">
-                        <img src="images/CV_ILYES_SANDLI.png" alt="Aperçu du CV de Sandli Ilyes">
-                    </div>
+                    <button class="cv__preview" type="button" data-lightbox="images/CV_ILYES_SANDLI.png" data-lightbox-alt="CV d'Ilyes Sandli, étudiant en BUT 3 Informatique" aria-label="Agrandir l'aperçu du CV">
+                        <img src="images/CV_ILYES_SANDLI.png" alt="Aperçu du CV d'Ilyes Sandli" width="1240" height="1754" loading="lazy">
+                    </button>
                 </div>
             </div>
         </section>
 
-        <section id="acquis">
-            <div class="glass-panel" style="border-left: 3px solid var(--accent); padding-left: 3rem;">
-                <span class="section-number">// 05</span>
-                <h2>Analyse Critiques des Acquis</h2>
-                <p style="font-size: 1.15rem; color: #fff; line-height: 1.7; max-width: 900px; margin-bottom: 1.5rem;">
-                    La multiplication des projets académiques et mon immersion en stage lors de ma deuxième année de BUT Informatique ont forgé mon socle de compétences en programmation. Surtout, ces expériences m'ont confronté à la réalité du terrain et aux exigences du monde professionnel.
-                </p>
-                <p style="font-size: 1.15rem; color: #fff; line-height: 1.7; max-width: 900px;">
-                    J'ai pris conscience d'un enjeu majeur : <strong>l'excellence technique n'est pas une fin en soi</strong>. Une architecture de code perd de sa valeur si elle ne répond pas précisément aux attentes. C'est pourquoi j'accorde aujourd'hui une importance capitale aux compétences transverses : l'analyse minutieuse des besoins clients, la communication fluide au sein d'une équipe et la gestion rigoureuse du cycle de vie d'un projet.
-                </p>
-            </div>
-        </section>
-
-        <section id="personnage">
-            <div class="glass-panel">
-                <span class="section-number">// 06</span>
-                <h2>Comprendre mon Personnage</h2>
-                <p style="max-width: 800px; margin-bottom: 2.5rem;">Au-delà du code pur, voici l'architecture de ma personnalité et la répartition de mes compétences comportementales (Soft Skills) en contexte de travail.</p>
-                
-                <div class="character-grid">
-                    <div>
-                        <div class="trait-box">
-                            <h4>Profil Analytique</h4>
-                            <p>Je dissèque les problèmes avant d'écrire la moindre ligne de code. J'aime comprendre le "pourquoi" profond d'un bug ou d'une demande client.</p>
-                        </div>
-                        <div class="trait-box">
-                            <h4>Nature Opiniâtre</h4>
-                            <p>Lorsqu'un projet m'est confié, je m'engage à le mener à son terme. Face aux obstacles techniques, je persévère et poursuis mes efforts jusqu'à l'aboutissement complet de mes objectifs.</p>
-                        </div>
-                        <div class="trait-box">
-                            <h4>Apprentissage Autonome</h4>
-                            <p>Habitué à fouiller la documentation technique et à expérimenter par moi-même pour intégrer des technologies non couvertes par le socle académique.</p>
-                        </div>
+        <!-- ================= CONTACT ================= -->
+        <section class="section" id="contact" aria-labelledby="contact-title">
+            <div class="container reveal">
+                <div class="contact__panel">
+                    <span class="section__eyebrow">06 · Contact</span>
+                    <h2 class="section__title" id="contact-title">Travaillons ensemble</h2>
+                    <p class="section__lead">Une offre de stage ou une collaboration ? Écrivez-moi, je réponds rapidement.</p>
+                    <a class="contact__email" href="mailto:sandli.ilyes@gmail.com?subject=Contact%20depuis%20votre%20portfolio" id="contact-email">sandli.ilyes@gmail.com</a>
+                    <div class="contact__actions">
+                        <a class="btn" href="mailto:sandli.ilyes@gmail.com?subject=Contact%20depuis%20votre%20portfolio">Envoyer un email</a>
+                        <button class="btn btn--ghost" type="button" id="copy-email">Copier l'adresse</button>
+                        <a class="btn btn--ghost" href="https://www.linkedin.com/in/ilyes-sandli-b37514383/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a class="btn btn--ghost" href="https://github.com/lexorom" target="_blank" rel="noopener noreferrer">GitHub</a>
                     </div>
-                    
-                    <div>
-                        <div class="stat-group">
-                            <div class="stat-label"><span>Résolution de problèmes complexes</span> <span>85%</span></div>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 85%;"></div></div>
-                        </div>
-                        <div class="stat-group">
-                            <div class="stat-label"><span>Autonomie & Débrouillardise</span> <span>90%</span></div>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 90%;"></div></div>
-                        </div>
-                        <div class="stat-group">
-                            <div class="stat-label"><span>Rigueur Opérationnelle</span> <span>100%</span></div>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 100%;"></div></div>
-                        </div>
-                        <div class="stat-group">
-                            <div class="stat-label"><span>Travail collaboratif (Git/Équipe)</span> <span>95%</span></div>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 95%;"></div></div>
-                        </div>
-                        <div class="stat-group">
-                            <div class="stat-label"><span>Adaptabilité technique</span> <span>90%</span></div>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 90%;"></div></div>
-                        </div>
-                    </div>
+                    <p class="contact__status" id="copy-status" role="status" aria-live="polite"></p>
+                    <p class="contact__meta">Basé à Amiens, France · Références disponibles sur demande</p>
                 </div>
             </div>
         </section>
+    </main>
 
-        <section id="references">
-            <div class="glass-panel">
-                <span class="section-number">// 07</span>
-                <h2>Garanties & Support académique</h2>
-                <div style="display: flex; flex-direction: column; gap: 2rem;">
-                    <div style="border-bottom: 1px solid var(--line-subtle); padding-bottom: 2rem;">
-                        <h3 style="color: #fff;">Seyho Yaldiz & Karabulut Ramazan</h3>
-                        <p style="font-size: 0.95rem; color: var(--accent);">Directeurs d'Établissement - Maison Marmara</p>
-                        <p style="margin-top: 0.5rem;">Maîtres de stage en charge de la gestion du restaurant. Superviseurs et validateurs de l'architecture du projet web développé lors de mon intégration.</p>
-                    </div>
-                    <div>
-                        <h3 style="color: #fff;">Arnaud Clerentin</h3>
-                        <p style="font-size: 0.95rem; color: var(--accent);">Professeur Évaluateur</p>
-                        <p style="margin-top: 0.5rem;">Supervision de la soutenance de fin de stage et validation des compétences d'intégration acquises durant la période de formation.</p>
-                    </div>
-                </div>
+    <footer class="site-footer">
+        <div class="container site-footer__inner">
+            <p>© <span id="year">2026</span> Ilyes Sandli · Fait à Amiens</p>
+            <a href="#accueil">Retour en haut ↑</a>
+        </div>
+    </footer>
+
+    <!-- ================= FENÊTRES DE DÉTAIL DES PROJETS ================= -->
+    <dialog class="dialog" id="project-unity" aria-labelledby="project-unity-title">
+        <button class="dialog__close" type="button" data-dialog-close aria-label="Fermer">×</button>
+        <div class="dialog__body">
+            <span class="project-card__meta">BUT 3 · Projet d'équipe · En cours</span>
+            <h3 class="dialog__title" id="project-unity-title">Jeu vidéo de stratégie par phases</h3>
+            <p>Jeu de stratégie par phases développé sous Unity, dans le cadre du projet de troisième année de BUT.</p>
+
+            <h4 class="dialog__heading">Contexte</h4>
+            <ul class="dialog__list">
+                <li>Équipe de 5 : 3 développeurs, 1 réseau et 1 data.</li>
+                <li>Moteur de jeu Unity, langage C#.</li>
+            </ul>
+
+            <h4 class="dialog__heading">Ma contribution</h4>
+            <ul class="dialog__list">
+                <li>Création des fonctionnalités du jeu.</li>
+                <li>Conception et développement de l'interface utilisateur.</li>
+                <!-- TODO : détailler les fonctionnalités réalisées (systèmes de phases, IA, UI…) -->
+            </ul>
+
+            <ul class="tags" aria-label="Technologies">
+                <li class="tag tag--accent">Unity</li>
+                <li class="tag tag--accent">C#</li>
+                <li class="tag tag--accent">Interface utilisateur</li>
+                <li class="tag tag--accent">Travail en équipe</li>
+            </ul>
+
+            <h4 class="dialog__heading">Aperçus</h4>
+            <div class="gallery">
+                <!-- TODO : remplacer ces espaces par des <button class="gallery__item" data-lightbox="images/…"><img …></button> -->
+                <div class="gallery__item gallery__item--placeholder"><div class="placeholder" role="img" aria-label="Capture d'écran à venir">Capture d'écran à venir</div></div>
+                <div class="gallery__item gallery__item--placeholder"><div class="placeholder" role="img" aria-label="Capture d'écran à venir">Capture d'écran à venir</div></div>
             </div>
-        </section>
 
-        <section id="contact">
-            <div class="glass-panel contact-centered">
-                <span class="section-number">// 08</span>
-                <h2>Demande de Contact</h2>
-                <p style="margin-bottom: 1.5rem;">Pour toute analyse de profil ou collaboration technique de fin d'études.</p>
-                
-                <div style="margin-bottom: 2.5rem; background: rgba(255,255,255,0.01); padding: 1.5rem; border: 1px dashed var(--line-subtle);">
-                    <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem;">Canal Direct Email</p>
-                    <p style="color: #fff; font-size: 1.4rem; font-weight: 600; font-family: 'Space Grotesk';">sandli.ilyes@gmail.com</p>
-                </div>
-
-                <p><span style="color: #fff;">Localisation standard :</span> Amiens, France</p>
-                <a href="https://www.linkedin.com/in/ilyes-sandli-b37514383/" target="_blank" class="action-btn" style="margin-top: 2rem;">Rejoindre sur LinkedIn</a>
+            <div class="dialog__actions">
+                <!-- TODO : URL du dépôt GitHub, éventuelle vidéo de démonstration -->
+                <a class="btn btn--sm btn--ghost" aria-disabled="true">Code · bientôt</a>
+                <a class="btn btn--sm btn--ghost" aria-disabled="true">Vidéo · bientôt</a>
             </div>
-        </section>
+        </div>
+    </dialog>
 
-    </div>
+    <dialog class="dialog" id="project-candy" aria-labelledby="project-candy-title">
+        <button class="dialog__close" type="button" data-dialog-close aria-label="Fermer">×</button>
+        <div class="dialog__body">
+            <span class="project-card__meta">BUT 2 · 03/2026 – 06/2026 · Projet réalisé seul</span>
+            <h3 class="dialog__title" id="project-candy-title">Candy Paradise – Site e-commerce</h3>
+            <p>Plateforme marchande complète avec backoffice d'administration et paiement en ligne sécurisé.</p>
 
-    <script>
-        // 1. TRANSITIONS DE SCROLL
-        document.addEventListener("DOMContentLoaded", () => {
-            const sections = document.querySelectorAll("section");
-            const observerOptions = { root: null, rootMargin: "-10% 0px -10% 0px", threshold: 0.15 };
+            <h4 class="dialog__heading">Ce que j'ai réalisé</h4>
+            <ul class="dialog__list">
+                <li>Conception de la base de données : produits, paniers et commandes.</li>
+                <li>Gestion complète du panier et du cycle de commande.</li>
+                <li>Intégration de l'API de paiement (Crédit Agricole, e-Transactions) avec sécurisation des flux.</li>
+                <li>Tableau de bord d'administration pour surveiller les flux et les stocks.</li>
+            </ul>
 
-            const sectionObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("is-visible");
-                    } else {
-                        entry.target.classList.remove("is-visible");
-                    }
-                });
-            }, observerOptions);
+            <ul class="tags" aria-label="Technologies">
+                <li class="tag tag--accent">HTML</li>
+                <li class="tag tag--accent">CSS</li>
+                <li class="tag tag--accent">PHP</li>
+                <li class="tag tag--accent">SQL</li>
+                <li class="tag tag--accent">API de paiement</li>
+                <li class="tag tag--accent">Sécurité web</li>
+            </ul>
 
-            sections.forEach(section => sectionObserver.observe(section));
-        });
+            <h4 class="dialog__heading">Aperçus</h4>
+            <div class="gallery">
+                <button class="gallery__item" type="button" data-lightbox="images/ecommerce_num1.png" data-lightbox-alt="Candy Paradise – capture 1">
+                    <img src="images/ecommerce_num1.png" alt="Candy Paradise – capture d'écran 1" width="1812" height="918" loading="lazy">
+                </button>
+                <button class="gallery__item" type="button" data-lightbox="images/ecommerce_num2.png" data-lightbox-alt="Candy Paradise – capture 2">
+                    <img src="images/ecommerce_num2.png" alt="Candy Paradise – capture d'écran 2" width="1817" height="903" loading="lazy">
+                </button>
+                <button class="gallery__item" type="button" data-lightbox="images/ecommerce_num3.png" data-lightbox-alt="Candy Paradise – capture 3">
+                    <img src="images/ecommerce_num3.png" alt="Candy Paradise – capture d'écran 3" width="1813" height="900" loading="lazy">
+                </button>
+            </div>
 
-        // 2. LOGIQUE GLOBALE PIANO & PARTICULES
-        const keys = document.querySelectorAll('.piano-key');
-        const particleLayer = document.getElementById('particle-layer');
-        const colors = ['#ff4655', '#ffd700', '#00fa9a', '#1e90ff', '#8a2be2'];
+            <div class="dialog__actions">
+                <!-- TODO : URL GitHub / démo -->
+                <a class="btn btn--sm btn--ghost" aria-disabled="true">Code · bientôt</a>
+            </div>
+        </div>
+    </dialog>
 
-        function isOverContent(target) {
-            return target.closest('.glass-panel, .side-panel, .image-placeholder, .image-container, button, a, .overlay, .lightbox');
-        }
+    <dialog class="dialog" id="project-studygo" aria-labelledby="project-studygo-title">
+        <button class="dialog__close" type="button" data-dialog-close aria-label="Fermer">×</button>
+        <div class="dialog__body">
+            <span class="project-card__meta">BUT 2 · 09/2025 – 01/2026 · Équipe de 4 développeurs et 2 bases de données</span>
+            <h3 class="dialog__title" id="project-studygo-title">StudyGo – Plateforme de covoiturage</h3>
+            <p>Application web de mise en relation pour le covoiturage universitaire.</p>
 
-        window.addEventListener('mousemove', (e) => {
-            if (isOverContent(e.target)) {
-                keys.forEach(k => k.classList.remove('active-hover'));
-                return;
-            }
-            const colIndex = Math.floor((e.clientX / window.innerWidth) * 5);
-            keys.forEach((key, index) => {
-                if (index === colIndex) key.classList.add('active-hover');
-                else key.classList.remove('active-hover');
-            });
-        });
+            <h4 class="dialog__heading">Fonctionnalités</h4>
+            <ul class="dialog__list">
+                <li>Authentification stricte des étudiants et des professeurs.</li>
+                <li>Publication, réservation, édition et suppression de trajets, avec messagerie.</li>
+                <li>Recherche du trajet adapté au besoin de l'utilisateur.</li>
+                <li>Modules de sécurité : signalement et liste noire.</li>
+                <li>Base de données des trajets et des informations utilisateurs.</li>
+                <li>Gestion du projet selon la méthode Agile Scrum.</li>
+            </ul>
 
-        window.addEventListener('mousedown', (e) => {
-            if (isOverContent(e.target)) return;
-            
-            e.preventDefault();
+            <ul class="tags" aria-label="Technologies">
+                <li class="tag tag--accent">PHP</li>
+                <li class="tag tag--accent">MySQL</li>
+                <li class="tag tag--accent">HTML</li>
+                <li class="tag tag--accent">CSS</li>
+                <li class="tag tag--accent">JavaScript</li>
+                <li class="tag tag--accent">Agile Scrum</li>
+            </ul>
 
-            const colIndex = Math.floor((e.clientX / window.innerWidth) * 5);
-            const color = colors[colIndex];
-            const key = keys[colIndex];
+            <h4 class="dialog__heading">Aperçus</h4>
+            <div class="gallery">
+                <button class="gallery__item" type="button" data-lightbox="images/study_go_num1.png" data-lightbox-alt="StudyGo – capture 1">
+                    <img src="images/study_go_num1.png" alt="StudyGo – capture d'écran 1" width="863" height="545" loading="lazy">
+                </button>
+                <button class="gallery__item" type="button" data-lightbox="images/study_go_num2.png" data-lightbox-alt="StudyGo – capture 2">
+                    <img src="images/study_go_num2.png" alt="StudyGo – capture d'écran 2" width="827" height="556" loading="lazy">
+                </button>
+                <button class="gallery__item" type="button" data-lightbox="images/study_go_num3.png" data-lightbox-alt="StudyGo – capture 3">
+                    <img src="images/study_go_num3.png" alt="StudyGo – capture d'écran 3" width="911" height="484" loading="lazy">
+                </button>
+            </div>
 
-            key.classList.remove('flash');
-            void key.offsetWidth; 
-            key.classList.add('flash');
-            
-            setTimeout(() => { key.classList.remove('flash'); }, 400);
+            <div class="dialog__actions">
+                <!-- TODO : URL GitHub / démo -->
+                <a class="btn btn--sm btn--ghost" aria-disabled="true">Code · bientôt</a>
+            </div>
+        </div>
+    </dialog>
 
-            const numParticles = Math.floor(Math.random() * 14) + 12; 
-            for (let i = 0; i < numParticles; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('piano-particle');
-                
-                particle.style.color = color;
-                particle.style.backgroundColor = color;
-                particle.style.left = `${e.clientX}px`;
-                particle.style.top = `${e.clientY}px`;
-                
-                const size = Math.random() * 12 + 3;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
+    <dialog class="dialog" id="project-marmara" aria-labelledby="project-marmara-title">
+        <button class="dialog__close" type="button" data-dialog-close aria-label="Fermer">×</button>
+        <div class="dialog__body">
+            <span class="project-card__meta">Stage · 01/2026 – 03/2026 · Projet réalisé seul</span>
+            <h3 class="dialog__title" id="project-marmara-title">Maison Marmara – Site vitrine</h3>
+            <p>Mission de stage : site vitrine responsive avec menu interactif pour un établissement de restauration.</p>
 
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 300 + 50; 
-                const mx = Math.cos(angle) * distance;
-                const my = Math.sin(angle) * distance;
-                const rot = Math.random() * 360;
+            <h4 class="dialog__heading">Ce que j'ai réalisé</h4>
+            <ul class="dialog__list">
+                <li>Analyse des besoins et des valeurs du restaurant : cahier des charges et maquettes.</li>
+                <li>Menu interactif pour consulter les plats, avec animations fluides (zoom sur les produits, navigation paginée).</li>
+                <li>Intégration entièrement responsive.</li>
+                <li>Prises de vue photographiques sur place.</li>
+                <li>Section dédiée aux autres établissements de l'enseigne.</li>
+            </ul>
+            <p>Autonomie et prise de décision tout au long de la mission, avec validation par les maîtres de stage.</p>
 
-                particle.style.setProperty('--mx', `${mx}px`);
-                particle.style.setProperty('--my', `${my}px`);
-                particle.style.setProperty('--rot', `${rot}deg`);
-                
-                const duration = Math.random() * 0.6 + 0.6;
-                particle.style.setProperty('--anim-duration', `${duration}s`);
+            <ul class="tags" aria-label="Technologies">
+                <li class="tag tag--accent">HTML</li>
+                <li class="tag tag--accent">CSS</li>
+                <li class="tag tag--accent">JavaScript</li>
+                <li class="tag tag--accent">UI / UX</li>
+                <li class="tag tag--accent">Sécurité web</li>
+            </ul>
 
-                particleLayer.appendChild(particle);
-                setTimeout(() => particle.remove(), duration * 1000);
-            }
-        });
+            <h4 class="dialog__heading">Aperçus</h4>
+            <div class="gallery">
+                <button class="gallery__item" type="button" data-lightbox="images/marmara_num1.png" data-lightbox-alt="Maison Marmara – capture 1">
+                    <img src="images/marmara_num1.png" alt="Maison Marmara – capture d'écran 1" width="1837" height="901" loading="lazy">
+                </button>
+                <button class="gallery__item" type="button" data-lightbox="images/marmara_num2.png" data-lightbox-alt="Maison Marmara – capture 2">
+                    <img src="images/marmara_num2.png" alt="Maison Marmara – capture d'écran 2" width="1836" height="887" loading="lazy">
+                </button>
+                <button class="gallery__item" type="button" data-lightbox="images/marmara_num3.png" data-lightbox-alt="Maison Marmara – capture 3">
+                    <img src="images/marmara_num3.png" alt="Maison Marmara – capture d'écran 3" width="1393" height="881" loading="lazy">
+                </button>
+            </div>
 
-        // 3. LOGIQUE CHANGER D'ONGLETS
-        function switchTab(event, tabId) {
-            const tabs = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            buttons.forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+            <div class="dialog__actions">
+                <!-- TODO : URL du site en ligne -->
+                <a class="btn btn--sm btn--ghost" aria-disabled="true">Site · bientôt</a>
+            </div>
+        </div>
+    </dialog>
 
-        // 4. PANNEAU LATÉRAL (DÉTAILS DES PROJETS ET GALERIE)
-        const projectData = {
-            twisto: {
-                title: "App Réseau Twisto",
-                meta: "BUT 1 • Édition 2024 - 2025",
-                imgHtml: `<div class="side-panel-img"><img src="images/twisto.png" alt="Twisto" style="object-fit: contain; padding: 1.5rem; background-color: rgba(255, 255, 255, 0.9);"></div>`,
-                desc: "Reconstruction algorithmique des grilles de transit d'un réseau urbain.",
-                details: "Modélisation de structures SQL complexes pour relier les arrêts, les lignes et les correspondances. Implémentation d'un algorithme de calcul d'itinéraire optimal et conception d'une interface utilisateur via Windows Forms.",
-                techs: ["Visual Studio Code", "Windows Forms", "C#", "C++", "SQL"],
-            },
-            studygo: {
-                title: "StudyGo - Covoiturage",
-                meta: "BUT 2 • Projet de 3 mois",
-                imgHtml: `<div class="side-panel-img"><img src="images/study_go.png" alt="StudyGo" style="object-fit: contain; padding: 1.5rem; background-color: rgba(255, 255, 255, 0.9);"></div>`,
-                desc: "Plateforme web de mise en relation de covoiturage universitaire.",
-                details: "Mise en place d'une authentification stricte (étudiants et professeurs), publication et réservation de trajets, gestion complète des itinéraires par les utilisateurs (édition, suppression, messagerie). Intégration d'un moteur de recherche optimisé et de modules de sécurité (signalement, liste noire).",
-                techs: ["PHP", "MySQL","HTML","CSS","JavaScript"],
-                gallery: ["images/study_go_num1.png", "images/study_go_num2.png", "images/study_go_num3.png"]
-            },
-            marmara: {
-                title: "Stage : Maison Marmara",
-                meta: "BUT 2 • Janvier - Mars 2026",
-                imgHtml: `<div class="side-panel-img"><img src="images/marmara.png" alt="Marmara" style="object-fit: cover; object-position: center;"></div>`,
-                desc: "Déploiement d'une interface vitrine avec menu interactif pour le secteur de la restauration.",
-                details: "Élaboration du cahier des charges après analyse des besoins de l'entreprise. Création des maquettes graphiques et développement d'un menu interactif enrichi d'animations fluides (zoom sur les produits, navigation paginée). Intégration entièrement responsive, réalisation des prises de vue photographiques sur place et déploiement d'une section dédiée aux autres établissements de l'enseigne.",
-                techs: ["HTML", "CSS", "JavaScript", "UI/UX", "Sécurité Web"],
-                gallery: ["images/marmara_num1.png", "images/marmara_num2.png", "images/marmara_num3.png"]
-            },
-            ecommerce: {
-                title: "Infrastructure E-Commerce",
-                meta: "BUT 2 • Production 2026",
-                imgHtml: `<div class="side-panel-img"><img src="images/e-commerce.png" alt="E-Commerce" style="object-fit: cover; object-position: left center;"></div>`,
-                desc: "Plateforme marchande unifiée avec backoffice d'administration.",
-                details: "Développement d'un système complet de gestion de panier et de commandes. Implémentation sécurisée de la passerelle de paiement e-Transactions (PBX). Modélisation de la base de données produit et conception de tableaux de bord d'administration pour le suivi en temps réel des stocks et des flux.",
-                techs: ["PHP / SQL", "API Paiement (PBX)", "HTML", "CSS", "JavaScript", "Sécurité Web"],
-                gallery: ["images/ecommerce_num1.png", "images/ecommerce_num2.png", "images/ecommerce_num3.png"]
-            }
-        };
+    <!-- Aperçu plein écran (CV et captures) -->
+    <dialog class="dialog dialog--lightbox" id="lightbox" aria-label="Aperçu en plein écran">
+        <img id="lightbox-img" alt="">
+    </dialog>
 
-        const panel = document.getElementById('project-panel');
-        const overlay = document.getElementById('panel-overlay');
-        const closeBtn = document.getElementById('close-panel');
-        const contentDiv = document.getElementById('panel-content');
-        const mainLightbox = document.getElementById('main-lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-
-        function openPanel(projectId) {
-            const data = projectData[projectId];
-            if(!data) return;
-            
-            const tagsHtml = data.techs.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
-            
-            // Ajout de la classe "zoomable-img" sur les images de la galerie pour qu'elles ouvrent la lightbox
-            const galleryHtml = data.gallery && data.gallery.length > 0 
-                ? `<div class="project-gallery" style="margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
-                    <h4 style="color: var(--accent); font-family: 'Space Grotesk'; font-size: 1.2rem; text-transform: uppercase; border-bottom: 1px solid var(--line-subtle); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">Aperçus visuels</h4>
-                    ${data.gallery.map(img => `<img src="${img}" alt="Capture du projet" class="zoomable-img" style="width: 100%; border-radius: 4px; border: 1px solid rgba(138,43,226,0.3); box-shadow: 0 10px 20px rgba(0,0,0,0.5); cursor: zoom-in;">`).join('')}
-                   </div>` 
-                : '';
-
-            contentDiv.innerHTML = `
-                ${data.imgHtml}
-                <h3>${data.title}</h3>
-                <span class="panel-meta">${data.meta}</span>
-                <p><strong>Objectif :</strong> ${data.desc}</p>
-                <p><strong>Détails techniques :</strong> ${data.details}</p>
-                <div class="tech-stack">${tagsHtml}</div>
-                ${galleryHtml}
-            `;
-            
-            panel.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            document.querySelector('.side-panel').addEventListener('mousedown', function(e) {
-                e.stopPropagation(); 
-            });
-        }
-
-        // Ecoute des clics sur les images générées dans le panneau pour ouvrir la Lightbox
-        contentDiv.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('zoomable-img')) {
-                lightboxImg.src = e.target.src;
-                mainLightbox.classList.add('active');
-            }
-        });
-
-        function closePanel() {
-            panel.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        closeBtn.addEventListener('click', closePanel);
-        overlay.addEventListener('mousedown', function(e) {
-            if(e.target === overlay) closePanel();
-        });
-
-        // 5. LOGIQUE DE ZOOM GÉNÉRIQUE (POUR LE CV ET LA GALERIE)
-        const cvTrigger = document.querySelector('.cv-preview-container');
-
-        if (cvTrigger) {
-            cvTrigger.addEventListener('click', () => {
-                // Utilise l'attribut data-img-src pour trouver la grande image
-                const imgSrc = cvTrigger.getAttribute('data-img-src');
-                lightboxImg.src = imgSrc;
-                mainLightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        }
-
-        // Fermeture de la lightbox au clic
-        if (mainLightbox) {
-            mainLightbox.addEventListener('click', () => {
-                mainLightbox.classList.remove('active');
-                // On remet le scroll du body UNIQUEMENT si le panneau latéral n'est pas ouvert
-                if (!document.getElementById('project-panel').classList.contains('active')) {
-                    document.body.style.overflow = '';
-                }
-            });
-        }
-    </script>
+    <script src="js/main.js" defer></script>
+    <script src="js/dialogs.js" defer></script>
+    <script src="js/piano.js" defer></script>
 </body>
 </html>
