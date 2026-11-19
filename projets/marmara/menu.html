@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Maison Marmara - La Carte</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Saira:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+:root {
+            --orange-primary: #f45d22;
+            --red-primary: #e31e24;
+            --bg-dark: #1a1e26;
+            
+            /* --- DIMENSIONS DU MENU --- */
+            --paper-width: 550px;
+            --paper-height: 690px;
+            
+            --duration: 1s;
+        }
+
+        body {
+            background-color: #2b2f38;
+            background-image: radial-gradient(#3a3f4b 15%, transparent 16%), radial-gradient(#3a3f4b 15%, transparent 16%);
+            background-size: 60px 60px;
+            font-family: 'Saira', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- ANIMATIONS D'ENTRÉE --- */
+        @keyframes bookEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(80px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes pulseClick {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); color: var(--orange-primary); }
+        }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%;
+            padding: 20px;
+            z-index: 100;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 30px;
+            width: fit-content;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: var(--orange-primary); }
+
+        /* --- LIVRE 3D --- */
+        .book-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+            margin-top: -70px; 
+            animation: bookEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .book {
+            position: relative;
+            width: var(--paper-width);
+            height: var(--paper-height);
+            transition: transform var(--duration) ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        .book.open-state {
+            transform: translateX(50%);
+        }
+
+        .book.close-right {
+            transform: translateX(100%);
+        }
+
+        /* --- FEUILLES --- */
+        .paper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            transition: transform var(--duration) cubic-bezier(0.645, 0.045, 0.355, 1), z-index 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        .paper.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            overflow: hidden;
+        }
+
+        .front { z-index: 2; }
+        .back {
+            z-index: 1;
+            transform: rotateY(180deg);
+        }
+
+        /* --- DESIGN DE LA COUVERTURE (NOIR) --- */
+        #p1 .front, #p10 .back {
+            background: #15181e url("https://www.transparenttextures.com/patterns/black-scales.png");
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 4px solid #333;
+            color: #d4af37;
+            box-shadow: inset 0 0 20px #000;
+        }
+        .cover-title {
+            font-family: 'Great Vibes', cursive; 
+            font-size: 3.5rem;
+        }
+        .click-to-open {
+            color: #aaa; 
+            font-size: 0.95rem; 
+            margin-top: 25px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: pulseClick 2s infinite ease-in-out;
+        }
+
+        /* --- DESIGN INTERIEUR --- */
+        .wood-page {
+            background-color: #eaddcf; 
+            background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+            background-blend-mode: multiply;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            color: #222;
+            border-left: 1px solid rgba(0,0,0,0.1);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.15);
+        }
+
+        .page-logo {
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--orange-primary);
+        }
+        .page-logo img {
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--red-primary);
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* --- STYLE 1 : LISTE VISUELLE --- */
+        .visual-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding-bottom: 10px;
+        }
+
+        .visual-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.4);
+            padding: 8px 10px;
+            border-radius: 12px;
+            gap: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .visual-item:hover {
+            transform: scale(1.02);
+            background: rgba(255,255,255,0.6);
+        }
+
+        .v-img {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+            overflow: hidden;
+            background: #fff;
+        }
+        .v-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        .v-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .v-name { font-weight: 900; font-size: 1.1rem; color: var(--bg-dark); text-transform: uppercase; line-height: 1.1; }
+        .v-desc { font-size: 0.85rem; color: #666; font-style: italic; margin-top: 3px; line-height: 1.1; }
+
+        .v-price {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: white;
+            background: var(--orange-primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(244, 93, 34, 0.3);
+            white-space: nowrap;
+        }
+
+        .drink-item { padding: 6px 10px !important; }
+        .drink-img { width: 55px !important; height: 55px !important; }
+
+        /* --- STYLE 2 : GRILLE --- */
+        .menu-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            overflow-y: auto;
+            padding: 5px;
+            align-content: center;
+        }
+
+        .grid-card {
+            background: rgba(255,255,255,0.5);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .grid-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.7); }
+
+        .grid-img {
+            width: 85px; 
+            height: 85px; 
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            margin-bottom: 8px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .grid-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .grid-name { font-weight: 900; font-size: 1.1rem; color: var(--bg-dark); text-transform: uppercase; margin-bottom: 3px; line-height: 1.1; }
+        .grid-desc { font-size: 0.75rem; color: #666; font-style: italic; margin-bottom: 8px; line-height: 1.1; }
+        .grid-price { font-size: 0.85rem; font-weight: 800; color: white; background: var(--orange-primary); padding: 4px 10px; border-radius: 20px; }
+
+        /* --- STYLE 3 : HERO --- */
+        .hero-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .hero-img {
+            width: 100%;
+            height: 120px; 
+            border-radius: 12px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+            background: #fff;
+        }
+        .hero-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+        }
+        .hero-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-top: 2px solid var(--orange-primary);
+        }
+        .hero-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+        }
+        .hero-item:last-child { border-bottom: none; }
+        
+        .hero-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #222;
+            text-transform: uppercase;
+        }
+        .hero-price {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--orange-primary);
+            font-size: 1rem;
+        }
+
+        /* --- MEATS SECTION --- */
+        .meats-section {
+            background: rgba(255,255,255,0.4);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 50px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .meats-title {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--red-primary);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 4px;
+        }
+        .meats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+        }
+        .meat-badge {
+            background: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #444;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+
+        /* --- KID MENU PRICE BANNER --- */
+        .kid-price-banner {
+            background: var(--red-primary);
+            color: white;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            padding: 5px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transform: rotate(-2deg);
+        }
+
+        .page-number {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 10px;
+            font-size: 0.7rem;
+            color: #555;
+            font-family: 'Montserrat';
+        }
+
+        /* --- STYLES GENERIQUES --- */
+        .menu-list { flex: 1; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+        .menu-item { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px dashed rgba(0,0,0,0.15); padding-bottom: 3px; }
+        .item-info { display: flex; flex-direction: column; flex: 1; justify-content: center; }
+        .item-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.9rem; color: #111; text-transform: uppercase; }
+        .item-desc { font-size: 0.6rem; color: #555; font-style: italic; margin-top: 1px; }
+        .item-price-block { text-align: right; min-width: 45px; }
+        .item-price { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--orange-primary); font-size: 0.95rem; }
+
+        /* --- STYLES DES PAGES FINALES --- */
+        .end-title { font-size: 1.6rem; margin-bottom: 20px; }
+        .end-subtitle { color: #333; font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+        .end-text { color: #555; font-weight: 500; margin-bottom: 20px; }
+        .btn-location { background: var(--bg-dark); color: white; padding: 10px 25px; border-radius: 30px; text-decoration: none; font-weight: bold; margin-bottom: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.3s; display: inline-block; }
+        .btn-location:hover { background: var(--orange-primary); }
+        .delivery-apps { display: flex; gap: 20px; justify-content: center; }
+        .app-btn { background: white; padding: 10px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+        .app-btn:hover { transform: scale(1.1); }
+        
+        .thanks-title { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--red-primary); line-height: 1; margin-top: 10px; }
+        .thanks-sub { font-style: italic; color: #555; margin-bottom: 30px; font-size: 1.1rem; }
+        .info-box { width: 85%; border-top: 2px dashed var(--orange-primary); border-bottom: 2px dashed var(--orange-primary); padding: 20px 0; margin-bottom: 20px; }
+        .info-title { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.2rem; color: var(--bg-dark); margin-bottom: 10px; text-transform: uppercase; }
+        .info-hours-title { font-weight: 800; color: var(--red-primary); font-size: 1.1rem; margin-bottom: 2px; }
+        .info-hours { font-weight: 700; color: #333; font-size: 1rem; }
+        .info-list { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 0.95rem; font-weight: 600; color: #444; text-align: center; align-items: center; }
+        .info-footer { margin-top: auto; font-size: 0.85rem; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- CONTROLS --- */
+        .controls {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            width: 1250px; 
+            max-width: 100%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in-out 1s forwards;
+        }
+
+        .btn-nav {
+            background: white;
+            color: var(--bg-dark);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.3s;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            pointer-events: auto;
+        }
+        .btn-nav:hover { background: var(--orange-primary); color: white; transform: scale(1.1); }
+
+        /* --- RENDRE LES ELEMENTS CLIQUABLES --- */
+        .visual-item, .grid-card, .hero-item, .menu-item {
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .hero-item:hover, .menu-item:hover {
+            background: rgba(255,255,255,0.4);
+            border-radius: 8px;
+            padding-left: 8px; 
+        }
+
+        /* --- MODAL PLATS (POP-UP) AVEC ANIMATION --- */
+        #dish-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0);
+            backdrop-filter: blur(0px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            pointer-events: none;
+            transition: background 0.4s ease, backdrop-filter 0.4s ease, visibility 0.4s;
+        }
+        #dish-modal.show {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 90%;
+            width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        #dish-modal.show .modal-content {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .modal-content img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: #fff;
+        }
+        .modal-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--bg-dark);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+        .modal-content p {
+            font-size: 1.2rem;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+        .modal-content span {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            background: var(--orange-primary);
+            padding: 8px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(244, 93, 34, 0.4);
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #999;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-close:hover {
+            color: var(--red-primary);
+        }
+
+        /* =========================================
+           RESPONSIVE MOBILE - NAVIGATION INTELLIGENTE
+           ========================================= */
+        @media (max-width: 768px) {
+            :root { --paper-width: 90vw; --paper-height: 65vh; }
+            
+            .book-section { margin-top: -60px; }
+            
+            .controls { top: auto; bottom: 15px; transform: translateX(-50%); width: 85%; padding: 0; }
+            
+            .wood-page { padding: 12px 10px; }
+            .page-logo img { height: 30px; }
+            .page-title { font-size: 1.1rem; margin-bottom: 10px; }
+            
+            .visual-item { padding: 6px 8px; gap: 10px; margin-bottom: 4px; }
+            .v-img { width: 55px; height: 55px; }
+            .v-name { font-size: 1.1rem; }
+            .v-desc { font-size: 0.85rem; }
+            .v-price { font-size: 0.95rem; padding: 3px 8px; }
+
+            .drink-item { padding: 4px 6px !important; gap: 8px; margin-bottom: 4px; }
+            .drink-img { width: 50px !important; height: 50px !important; }
+            
+            .grid-card { padding: 8px; }
+            .grid-img { width: 55px; height: 55px; margin-bottom: 5px; }
+            .grid-name { font-size: 1.1rem; }
+            .grid-desc { font-size: 0.85rem; margin-bottom: 5px;}
+            .grid-price { font-size: 0.95rem; padding: 3px 8px; }
+            
+            .hero-img { height: 80px; margin-bottom: 10px; }
+            .hero-item { padding: 6px 2px; }
+            .hero-name { font-size: 0.75rem; }
+            .hero-price { font-size: 0.85rem; }
+            
+            .meats-section { padding: 8px; margin-bottom: 20px; }
+            .meats-title { font-size: 1rem; margin-bottom: 5px; }
+            .meat-badge { font-size: 0.75rem; padding: 2px 6px; }
+            
+            .menu-list { gap: 1px; }
+            .menu-item { padding-bottom: 0px; gap: 2px; }
+            .item-name { font-size: 0.65rem; }
+            .item-desc { font-size: 0.55rem; margin-top: 0; }
+            .item-price { font-size: 0.75rem; }
+            .item-price-block { min-width: 35px; }
+
+            h2[style*="font-size:1.1rem"] {
+                font-size: 0.95rem !important;
+                margin-bottom: 2px !important;
+                margin-top: 2px !important;
+                padding-top: 2px !important;
+            }
+
+            .end-title { font-size: 1.2rem; margin-bottom: 10px; }
+            .end-subtitle { font-size: 0.9rem; }
+            .end-text { font-size: 0.8rem; margin-bottom: 10px; }
+            .btn-location { padding: 8px 15px; font-size: 0.85rem; margin-bottom: 20px; }
+            .delivery-apps { gap: 10px; }
+            .app-btn { width: 60px; height: 60px; padding: 8px; border-radius: 12px; }
+            
+            .thanks-title { font-size: 2.2rem; }
+            .thanks-sub { font-size: 0.9rem; margin-bottom: 15px; }
+            .info-box { padding: 10px 0; margin-bottom: 10px; width: 95%; }
+            .info-title { font-size: 1rem; margin-bottom: 5px; }
+            .info-hours-title { font-size: 0.9rem; }
+            .info-hours { font-size: 0.85rem; }
+            .info-list { font-size: 0.75rem; gap: 5px; margin-top: 10px; }
+            .info-footer { font-size: 0.65rem; }
+            
+            .modal-content { padding: 30px 20px; }
+            .modal-content img { width: 190px; height: 190px; }
+            .modal-content h3 { font-size: 1.5rem; }
+            .modal-content p { font-size: 1rem; }
+
+            .book.open-state { transform: translateX(0); } 
+            .book.mobile-focus-left { transform: translateX(100%) !important; } 
+            .book.mobile-focus-right { transform: translateX(0) !important; } 
+            .book.close-right { transform: translateX(100%); } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Retour
+        </a>
+    </header>
+
+    <div class="book-section">
+        <div id="book" class="book">
+
+            <div id="p1" class="paper" style="z-index: 10;">
+                <div class="front">
+                    <div class="cover-logo">
+                        <img src="images/Maison_Marmara_Logo.png" alt="Logo" style="width: 120px; filter: drop-shadow(0 0 5px rgba(212,175,55,0.5)); margin-bottom: 20px;">
+                    </div>
+                    <div class="cover-title">Menu</div>
+                    <p class="click-to-open">CLIQUEZ POUR OUVRIR</p>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Nos Sandwichs</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Kebab.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Kebab</span><span class="v-desc">Notre fameuse viande rôtie, crudités, sauce au choix</span></div><span class="v-price">8.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Libanais.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Libanais kebab</span><span class="v-desc">Viande kebab enroulée dans une fine galette</span></div><span class="v-price">8.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Libanais.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Libanais royale</span><span class="v-desc">Maxi galette supplément steak ou escalope</span></div><span class="v-price">9.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Steak.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Steak Haché</span><span class="v-desc">Steak 100% bœuf, salade, tomate, oignons</span></div><span class="v-price">8.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Steak.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Boulette viande</span><span class="v-desc">Köfte traditionnelles aux épices orientales</span></div><span class="v-price">9.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 1 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p2" class="paper" style="z-index: 9;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Nos Sandwichs</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Brochette_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Brochette poulet</span><span class="v-desc">Dés de poulet marinés et grillés au charbon</span></div><span class="v-price">9.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Escalope_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Escalope Poulet</span><span class="v-desc">Escalope de volaille finement émincée et saisie</span></div><span class="v-price">9.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Escalope_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Chicken curry</span><span class="v-desc">Poulet onctueux mariné à la sauce curry</span></div><span class="v-price">9.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Kefta.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Brochette agneau</span><span class="v-desc">Morceaux d'agneau fondants et épicés</span></div><span class="v-price">10.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Sandwich_Merguez.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Merguez</span><span class="v-desc">Saucisses orientales grillées pleines de saveur</span></div><span class="v-price">9.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 2 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Assiettes (1)</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Kebab.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Döner kebab</span><span class="v-desc">Notre viande finement tranchée, blé et salade</span></div><span class="v-price">13.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Kebab.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Iskender</span><span class="v-desc">Viande sur pain pita, sauce tomate chaude, yaourt</span></div><span class="v-price">17.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Mixte.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Marmara Mix</span><span class="v-desc">Assortiment généreux de nos meilleures viandes</span></div><span class="v-price">18.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Kefta.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Brochette agneau</span><span class="v-desc">Deux belles brochettes marinées, grillées au feu</span></div><span class="v-price">17.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Cotelettes</span><span class="v-desc">Tendres côtelettes d'agneau grillées (4 pièces)</span></div><span class="v-price">17.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 3 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p3" class="paper" style="z-index: 8;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Assiettes (2)</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Brochette poulet</span><span class="v-desc">Morceaux de poulet tendres grillés à la flamme</span></div><span class="v-price">13.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Escalope.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Escalope</span><span class="v-desc">Escalope de poulet dorée, accompagnée de frites</span></div><span class="v-price">13.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Chicken curry</span><span class="v-desc">Volaille marinée dans une sauce curry crémeuse</span></div><span class="v-price">13.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Ailes de poulet</span><span class="v-desc">Wings grillées et savoureuses (8 pièces)</span></div><span class="v-price">14.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Poulet.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Nuggets</span><span class="v-desc">Beignets de poulet dorés et croustillants</span></div><span class="v-price">12.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 4 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Assiettes (3)</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Kefta.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Boulette viande</span><span class="v-desc">Assiette de Köfte artisanales grillées</span></div><span class="v-price">13.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Steak.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Steak</span><span class="v-desc">Steak de bœuf cuit à votre convenance</span></div><span class="v-price">13.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Kebab.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Bavette</span><span class="v-desc">Pièce de bœuf tendre et savoureuse</span></div><span class="v-price">17.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Mixte.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Marmara</span><span class="v-desc">Spécialité maison avec viande hachée épicée</span></div><span class="v-price">17.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Merguez.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Merguez</span><span class="v-desc">Assiette généreuse de saucisses orientales</span></div><span class="v-price">12.50€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 5 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p4" class="paper" style="z-index: 7;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Assiettes (4)</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Kebab.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Aubergine farcie</span><span class="v-desc">Assiette végétarienne autour de l'aubergine rôtie</span></div><span class="v-price">15.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Kebab.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Falafel</span><span class="v-desc">Boulettes de pois chiches, houmous et crudités</span></div><span class="v-price">13.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Libanais.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Panini kebab</span><span class="v-desc">Pain pressé chaud garni de notre viande kebab</span></div><span class="v-price">12.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Libanais.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Panini fromage</span><span class="v-desc">Pain chaud fondu avec un mix de fromages</span></div><span class="v-price">11.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/MENU/Assiette_Libanais_Royal.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Libanais royale</span><span class="v-desc">Assiette maxi galette avec viande et garnitures</span></div><span class="v-price">15.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 6 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Nos Berliner</h2>
+                        <div class="hero-container">
+                            <div class="hero-img">
+                                <img src="images/MENU/Berliner.png" alt="Berliner Géant">
+                            </div>
+                            <div class="hero-list">
+                                <div class="hero-item">
+                                    <span class="hero-name">Kebab au feu de bois</span> <span class="hero-price">10.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Kebab + Chicken</span> <span class="hero-price">12.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Kebab + Bavette</span> <span class="hero-price">12.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Kebab + Steak</span> <span class="hero-price">12.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Kebab + Merguez</span> <span class="hero-price">12.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Kebab + Buratta</span> <span class="hero-price">12.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Kebab avec Féta</span> <span class="hero-price">12.00€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-number">- 7 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p5" class="paper" style="z-index: 6;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">French Tacos</h2>
+                         <div class="hero-container">
+                            <div class="hero-img">
+                                <img src="images/MENU/Tacos.png" alt="Tacos Géant">
+                            </div>
+                            <div class="hero-list">
+                                <div class="hero-item">
+                                    <span class="hero-name">Tacos 1 Viande (M)</span> <span class="hero-price">7.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Tacos 2 Viandes (L)</span> <span class="hero-price">9.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Tacos 3 Viandes (XL)</span> <span class="hero-price">12.00€</span>
+                                </div>
+                                <div class="hero-item">
+                                    <span class="hero-name">Supplément Frites</span> <span class="hero-price">1.50€</span>
+                                </div>
+                            </div>
+                            <div class="meats-section">
+                                <div class="meats-title">Choix des Viandes</div>
+                                <div class="meats-grid">
+                                    <span class="meat-badge">Cordons bleu</span>
+                                    <span class="meat-badge">Nuggets</span>
+                                    <span class="meat-badge">Tenders</span>
+                                    <span class="meat-badge">Steak haché</span>
+                                    <span class="meat-badge">Kebab</span>
+                                    <span class="meat-badge">Escalope</span>
+                                    <span class="meat-badge">Merguez</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-number">- 8 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Spécial Sandwichs</h2>
+                        
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Kebab Gratiné au four</span><span class="v-desc">Fini au four, fromage fondu</span></div><span class="v-price">10.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Le Chicken Rouge</span><span class="v-desc">Poulet mariné épicé</span></div><span class="v-price">9.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Burger</span><span class="v-desc">Steak, salade, tomate</span></div><span class="v-price">7.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Chicken Burger</span><span class="v-desc">Poulet pané, cheddar</span></div><span class="v-price">7.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Fish Burger</span><span class="v-desc">Poisson pané, sauce tartare</span></div><span class="v-price">7.50€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 9 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p6" class="paper" style="z-index: 5;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Nos Bowls</h2>
+                        <div class="menu-grid" style="align-content:center;">
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Maison Marmara</span>
+                                <span class="grid-desc">Kebab au feu de bois, crudités, riz, frites maisons</span>
+                                <span class="grid-price">13.00€</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Bowl Cheddar</span>
+                                <span class="grid-desc">Kebab au feu de bois, crudités, riz, jalapenos, frites maisons</span>
+                                <span class="grid-price">13.00€</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Bowl Kebab + Tenders</span>
+                                <span class="grid-desc">Steak avec cheddar, crudités, riz, jalapenos, frites maisons</span>
+                                <span class="grid-price">13.00€</span>
+                            </div>
+                             <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Bowl Steak + Tenders</span>
+                                <span class="grid-desc">Steak avec cheddar, crudités, riz, jalapenos, frites maisons</span>
+                                <span class="grid-price">13.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 10 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        
+                        <h2 class="page-title" style="font-size:1.1rem; margin-bottom:5px;">Tex-Mex</h2>
+                        <div class="menu-list" style="flex:1; gap:2px; overflow:hidden;">
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Tenders (x3)</span></div><div class="item-price-block"><span class="item-price">4.50€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Tenders (x5)</span></div><div class="item-price-block"><span class="item-price">7.50€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Wings (x3)</span></div><div class="item-price-block"><span class="item-price">3.90€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Wings (x6)</span></div><div class="item-price-block"><span class="item-price">7.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Nuggets (x6)</span></div><div class="item-price-block"><span class="item-price">5.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Nems poulet ou crevette (x4)</span></div><div class="item-price-block"><span class="item-price">5.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Mozza sticks (x4)</span></div><div class="item-price-block"><span class="item-price">5.00€</span></div></div>
+                        </div>
+
+                        <h2 class="page-title" style="font-size:1.1rem; margin-top:5px; margin-bottom:5px; border-top:1px dashed #ccc; padding-top:5px;">Suppléments</h2>
+                        <div class="menu-list" style="flex:1; gap:2px; overflow:hidden;">
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Viande moyenne</span></div><div class="item-price-block"><span class="item-price">8.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Viande grande</span></div><div class="item-price-block"><span class="item-price">14.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Frites moyenne</span></div><div class="item-price-block"><span class="item-price">3.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Frites grande</span></div><div class="item-price-block"><span class="item-price">5.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Blé moyenne</span></div><div class="item-price-block"><span class="item-price">3.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Blé grande</span></div><div class="item-price-block"><span class="item-price">5.00€</span></div></div>
+                            <div class="menu-item" style="padding-bottom:2px;"><div class="item-info"><span class="item-name">Champignions à la grecque moyenne</span></div><div class="item-price-block"><span class="item-price">5.00€</span></div></div>
+                        </div>
+
+                        <div class="page-number">- 11 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p7" class="paper" style="z-index: 4;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Pide & Pizza</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Fromage</span><span class="v-desc">Viande hachée, légumes</span></div><span class="v-price">8.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Saucisson Fromage</span><span class="v-desc">Fromage feta/mozza</span></div><span class="v-price">9.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Viande d'agneau</span><span class="v-desc">Saucisson turc, fromage</span></div><span class="v-price">13.00€</span>
+                            </div>
+                            <div class="visual-item" style="margin-top:10px;">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Pizza Turque</span><span class="v-desc">Viande, poivrons, tomates</span></div><span class="v-price">3.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Pizza Turque + döner</span><span class="v-desc">Base tomate, fromage turc</span></div><span class="v-price">9.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 12 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Nos Paninis</h2>
+                        <div class="visual-list">
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Panini Kebab</span><span class="v-desc">Viande kebab, fromage</span></div><span class="v-price">7.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Panini Chicken</span><span class="v-desc">Poulet, curry, fromage</span></div><span class="v-price">7.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Panini Fromage</span><span class="v-desc">Mozzarella, Cheddar, Feta</span></div><span class="v-price">6.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Panini Nutella</span><span class="v-desc">Saucisson, fromage</span></div><span class="v-price">5.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 13 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p8" class="paper" style="z-index: 3;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Menu Enfant</h2>
+                        <div class="kid-price-banner">6.90€</div>
+                        <p style="text-align:center; font-style:italic; margin-bottom:20px; color:#555;">Inclus : Plat + Frites + Capri-Sun</p>
+                        <div class="menu-grid" style="align-content:center;">
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Viande au choix</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Chicken Burger</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Nuggets</span>
+                            </div>
+                             <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Capri-Sun</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 14 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Desserts</h2>
+                        <div class="menu-grid" style="align-content: center; gap: 5px; overflow: hidden; height: 100%;">
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">???</span><span class="grid-price">3.50€</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Baklava</span><span class="grid-price">4.00€</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Helva</span><span class="grid-price">3.50€</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Tarte noix de coco</span><span class="grid-price">3.50€</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Tiramisu</span><span class="grid-price">3.50€</span>
+                            </div>
+                            <div class="grid-card">
+                                <div class="grid-img"><img src="images/Berliner.png"></div>
+                                <span class="grid-name">Lokum 6psd</span><span class="grid-price">3.50€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 15 -</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p9" class="paper" style="z-index: 2;">
+                <div class="front">
+                    <div class="wood-page">
+                        <div class="page-logo"><img src="images/Maison_Marmara_Logo.png"></div>
+                        <h2 class="page-title">Boissons</h2>
+                        <div class="visual-list" style="justify-content: center; gap: 6px; overflow: hidden;">
+                            <div class="visual-item">
+                                <div class="v-img" style="width: 55px; height: 55px;"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Canette 33cl</span></div><span class="v-price">1.80€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img" style="width: 55px; height: 55px;"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Ayran</span><span class="v-desc">Boisson yaourt salée</span></div><span class="v-price">2.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img" style="width: 55px; height: 55px;"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Café</span></div><span class="v-price">1.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img" style="width: 55px; height: 55px;"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Thé</span></div><span class="v-price">1.50€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img" style="width: 55px; height: 55px;"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Cappuccino</span></div><span class="v-price">3.00€</span>
+                            </div>
+                            <div class="visual-item">
+                                <div class="v-img" style="width: 55px; height: 55px;"><img src="images/Berliner.png" alt="Img"></div>
+                                <div class="v-info"><span class="v-name">Milkshake</span><span class="v-desc">Vanille, Fraise, Choco, Banane, Pistache</span></div><span class="v-price">4.00€</span>
+                            </div>
+                        </div>
+                        <div class="page-number">- 16 -</div>
+                    </div>
+                </div>
+                <div class="back">
+                     <div class="wood-page flex flex-col justify-center items-center h-full text-center">
+                        <h2 class="page-title end-title">Sur place ou à emporter</h2>
+                        
+                        <p class="end-subtitle">
+                            📍 25 Rue De Beauvais
+                        </p>
+                        <p class="end-text">
+                            80000 Amiens
+                        </p>
+                        
+                        <a href="https://maps.google.com/?q=25+Rue+De+Beauvais,+80000+Amiens" target="_blank" class="btn-location">
+                            <i class="fas fa-location-arrow"></i> Y aller
+                        </a>
+                        
+                        <div style="width: 80%; border-top: 2px dashed rgba(0,0,0,0.2); margin-bottom: 20px;"></div>
+
+                        <h2 class="page-title end-title" style="margin-bottom: 15px;">Livraison</h2>
+                        <div class="delivery-apps">
+                            <a href="https://www.ubereats.com/fr/store/grill-marmara/YG-xuWaGVPaXFE5kXdhnUw?diningMode=DELIVERY&ps=1&sc=SEARCH_SUGGESTION" target="_blank" class="app-btn">
+                                <img src="images/Uber Eats.png" alt="Uber Eats" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            </a>
+                            <a href="https://deliveroo.fr/fr/menu/amiens/amiens-centre-ville/marmara-grill-amiens" target="_blank" class="app-btn">
+                                <img src="images/deliveroo.png" alt="Deliveroo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            </a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+            <div id="p10" class="paper" style="z-index: 1;">
+                <div class="front">
+                    <div class="wood-page flex flex-col justify-center items-center h-full text-center">
+                        <img src="images/Maison_Marmara_Logo.png" style="width: 90px; margin-bottom: 10px;">
+                        
+                        <h2 class="thanks-title">Merci</h2>
+                        <p class="thanks-sub">de votre visite !</p>
+                        
+                        <div class="info-box">
+                            <h3 class="info-title">HORAIRES</h3>
+                            <p class="info-hours-title">
+                                <i class="fas fa-clock"></i> Ouvert 7J/7
+                            </p>
+                            <p class="info-hours">
+                                de 11h00 à 22h00
+                            </p>
+                            
+                            <div class="info-list">
+                                <p><i class="fas fa-phone" style="color: var(--bg-dark);"></i> +33 9 50 85 77 02</p>
+                                <p><i class="fas fa-drumstick-bite" style="color: var(--orange-primary);"></i> Viande 100% Halal</p>
+                                <p><i class="fas fa-fire" style="color: var(--red-primary);"></i> Grillade au Feu de bois</p>
+                            </div>
+                        </div>
+                        
+                        <p class="info-footer">
+                            Tradition Turque depuis 1998
+                        </p>
+                    </div> 
+                </div>
+                <div class="back">
+                    <div style="margin-top: auto; margin-bottom: auto; text-align:center;">
+                        <img src="images/Maison_Marmara_Logo.png" alt="Logo" style="width: 80px; filter: drop-shadow(0 0 5px rgba(212,175,55,0.5)); opacity:0.7;">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="dish-modal">
+        <div class="modal-content">
+            <i class="fas fa-times modal-close" id="modal-close"></i>
+            <img id="modal-img" src="" alt="Plat">
+            <h3 id="modal-name">Nom du plat</h3>
+            <p id="modal-desc">Description du plat</p>
+            <span id="modal-price">Prix</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prev-btn" class="btn-nav"><i class="fas fa-chevron-left"></i></button>
+        <button id="next-btn" class="btn-nav"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        const prevBtn = document.querySelector("#prev-btn");
+        const nextBtn = document.querySelector("#next-btn");
+        const book = document.querySelector("#book");
+
+        // Attention, il n'y a plus que 10 pages ici !
+        const papers = [
+            document.querySelector("#p1"),
+            document.querySelector("#p2"),
+            document.querySelector("#p3"),
+            document.querySelector("#p4"),
+            document.querySelector("#p5"),
+            document.querySelector("#p6"),
+            document.querySelector("#p7"),
+            document.querySelector("#p8"),
+            document.querySelector("#p9"),
+            document.querySelector("#p10")
+        ];
+
+        let currentState = 1; 
+        const numOfPapers = 10; // Corrigé ici aussi
+        const maxState = numOfPapers + 1;
+        
+        let mobileFocus = 'right'; 
+
+        function isMobile() {
+            return window.matchMedia("(max-width: 768px)").matches;
+        }
+
+        function updateBookClasses() {
+            book.classList.remove("open-state", "close-right", "mobile-focus-left", "mobile-focus-right");
+
+            if (currentState === 1) {
+                // Couverture fermée
+            } else if (currentState === maxState) {
+                book.classList.add("close-right");
+            } else {
+                book.classList.add("open-state");
+                if (isMobile()) {
+                    if (mobileFocus === 'left') book.classList.add("mobile-focus-left");
+                    if (mobileFocus === 'right') book.classList.add("mobile-focus-right");
+                }
+            }
+        }
+
+        function goNextPage(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            if (isMobile() && currentState > 1 && currentState < maxState && mobileFocus === 'left') {
+                mobileFocus = 'right';
+                updateBookClasses();
+                return;
+            }
+
+            if(currentState < maxState) {
+                papers[currentState - 1].classList.add("flipped");
+                papers[currentState - 1].style.zIndex = currentState; 
+
+                currentState++;
+                
+                if (currentState > 1 && currentState < maxState) {
+                    mobileFocus = 'left';
+                }
+                
+                updateBookClasses();
+            }
+        }
+
+        function goPrevPage(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            if (isMobile() && currentState > 1 && currentState < maxState && mobileFocus === 'right') {
+                mobileFocus = 'left';
+                updateBookClasses();
+                return;
+            }
+
+            if(currentState > 1) {
+                currentState--;
+                
+                papers[currentState - 1].classList.remove("flipped");
+                papers[currentState - 1].style.zIndex = (numOfPapers + 1) - (currentState - 1);
+
+                if (currentState > 1 && currentState < maxState) {
+                    mobileFocus = 'right';
+                }
+                
+                updateBookClasses();
+            }
+        }
+
+        nextBtn.addEventListener("click", goNextPage);
+        prevBtn.addEventListener("click", goPrevPage);
+
+        papers[0].addEventListener("click", (e) => {
+            if(currentState === 1) {
+                goNextPage(e);
+            }
+        });
+
+        // Logique de la modale d'affichage des plats
+        const modalOverlay = document.getElementById('dish-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalName = document.getElementById('modal-name');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalPrice = document.getElementById('modal-price');
+        const modalCloseBtn = document.getElementById('modal-close');
+
+        const menuItems = document.querySelectorAll('.visual-item, .grid-card, .hero-item, .menu-item');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) return; 
+
+                e.stopPropagation();
+
+                const name = item.querySelector('.v-name, .grid-name, .hero-name, .item-name')?.innerText || '';
+                const desc = item.querySelector('.v-desc, .grid-desc, .item-desc')?.innerText || '';
+                const price = item.querySelector('.v-price, .grid-price, .hero-price, .item-price')?.innerText || '';
+                
+                let imgEl = item.querySelector('img');
+                if (!imgEl) {
+                    imgEl = item.closest('.hero-container')?.querySelector('.hero-img img');
+                }
+
+                modalName.innerText = name;
+                
+                if(desc) {
+                    modalDesc.innerText = desc;
+                    modalDesc.style.display = 'block';
+                } else {
+                    modalDesc.style.display = 'none';
+                }
+                
+                if(price) {
+                    modalPrice.innerText = price;
+                    modalPrice.style.display = 'inline-block';
+                } else {
+                    modalPrice.style.display = 'none';
+                }
+
+                if (imgEl) {
+                    modalImg.src = imgEl.src;
+                    modalImg.style.display = 'block';
+                } else {
+                    modalImg.style.display = 'none';
+                }
+
+                modalOverlay.classList.add('show');
+            });
+        });
+
+        const closeModal = () => modalOverlay.classList.remove('show');
+        
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+    </script>
+</body>
+</html>
